@@ -331,13 +331,13 @@
                     </button>
                 </div>
 
-                <!-- Contact Form -->
-                <form onsubmit="handleContactSubmit(event)" class="md:col-span-2 space-y-4">
+                <!-- Formspree Contact Form -->
+                <form action="https://formspree.io/f/xrpevjnk" method="POST" class="md:col-span-2 space-y-4">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <input type="text" required placeholder="Your Name" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:ring-2 focus:ring-sky-500 outline-none">
-                        <input type="email" required placeholder="Your Email" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:ring-2 focus:ring-sky-500 outline-none">
+                        <input type="text" name="name" required placeholder="Your Name" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:ring-2 focus:ring-sky-500 outline-none">
+                        <input type="email" name="email" required placeholder="Your Email" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:ring-2 focus:ring-sky-500 outline-none">
                     </div>
-                    <textarea rows="4" required placeholder="Write your message here..." class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:ring-2 focus:ring-sky-500 outline-none"></textarea>
+                    <textarea name="message" rows="4" required placeholder="Write your message here..." class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:ring-2 focus:ring-sky-500 outline-none"></textarea>
                     <button type="submit" class="px-8 py-3 bg-sky-500 hover:bg-sky-600 text-white font-medium text-sm rounded-xl shadow-lg shadow-sky-500/25 transition-all">
                         <i class="fas fa-paper-plane mr-2"></i><span data-i18n="btn_send_msg">Send Message</span>
                     </button>
@@ -468,12 +468,11 @@
         </div>
     </div>
 
-    <!-- Firebase SDKs -->
+    <!-- Firebase SDKs & App Logic -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-        // Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyDUFNpaTXGaMGV2U4iC2c-tgUoQxAuuxLg",
             authDomain: "my-portfolio-c39df.firebaseapp.com",
@@ -538,14 +537,12 @@
         window.isAdmin = false;
         window.currentLang = 'en';
 
-        // Listen for Realtime Database changes (Cloud Sync for all visitors)
         const dbRef = ref(db, 'portfolioData');
         onValue(dbRef, (snapshot) => {
             const data = snapshot.val();
             if (data) {
                 window.appData = data;
             } else {
-                // Initialize if empty
                 set(dbRef, DEFAULT_DATA);
             }
             renderAll();
@@ -965,12 +962,6 @@
             document.getElementById('toast-msg').innerText = message;
             toast.classList.remove('translate-y-20', 'opacity-0');
             setTimeout(() => { toast.classList.add('translate-y-20', 'opacity-0'); }, 3000);
-        }
-
-        window.handleContactSubmit = function(e) {
-            e.preventDefault();
-            window.showToast(window.currentLang === 'bn' ? "আপনার বার্তা পাঠানো হয়েছে!" : "Your message has been sent!");
-            e.target.reset();
         }
     </script>
 </body>
