@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="bn" class="scroll-smooth">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,6 +40,11 @@
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 0.8s infinite;
+        }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
         @media print {
             .no-print { display: none !important; }
             body { background: white; color: black; }
@@ -53,6 +58,11 @@
         <i class="fas fa-check-circle text-emerald-400 text-xl"></i>
         <span id="toast-msg" class="font-medium">Success!</span>
     </div>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="fixed bottom-6 left-6 z-40 bg-sky-500 hover:bg-sky-600 text-white p-3 rounded-full shadow-2xl transition-all duration-300 opacity-0 pointer-events-none no-print">
+        <i class="fas fa-arrow-up"></i>
+    </button>
 
     <!-- Navigation Bar -->
     <nav class="sticky top-0 z-40 w-full glass-card border-b border-slate-200 dark:border-slate-800 no-print">
@@ -68,13 +78,19 @@
 
             <div class="hidden md:flex items-center space-x-6 text-sm font-medium">
                 <a href="#about" class="hover:text-sky-500 transition-colors" data-i18n="nav_about">About Me</a>
-                <a href="#skills" class="hover:text-sky-500 transition-colors" data-i18n="nav_skills">Skills & Experience</a>
+                <a href="#skills" class="hover:text-sky-500 transition-colors" data-i18n="nav_skills">Skills</a>
                 <a href="#projects" class="hover:text-sky-500 transition-colors" data-i18n="nav_projects">Projects</a>
+                <a href="#testimonials" class="hover:text-sky-500 transition-colors" data-i18n="nav_reviews">Reviews</a>
                 <a href="#gallery" class="hover:text-sky-500 transition-colors" data-i18n="nav_gallery">Gallery</a>
                 <a href="#contact" class="hover:text-sky-500 transition-colors" data-i18n="nav_contact">Contact</a>
             </div>
 
-            <div class="flex items-center space-x-3">
+            <div class="flex items-center space-x-2">
+                <!-- Backup Export Data -->
+                <button onclick="exportJSONData()" class="admin-only hidden p-2 rounded-lg bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors text-xs font-bold" title="Backup All Site Data">
+                    <i class="fas fa-download text-emerald-500"></i>
+                </button>
+
                 <!-- Language Toggle Button -->
                 <button onclick="toggleLanguage()" class="p-2 rounded-lg bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors text-xs font-bold px-3 flex items-center space-x-1">
                     <i class="fas fa-globe text-sky-500"></i>
@@ -88,7 +104,7 @@
                 </button>
 
                 <!-- Admin Login/Logout Button -->
-                <button id="admin-btn" onclick="handleAdminAuth()" class="px-4 py-2 rounded-xl text-xs font-semibold bg-sky-500 hover:bg-sky-600 text-white transition-all shadow-md flex items-center space-x-1">
+                <button id="admin-btn" onclick="handleAdminAuth()" class="px-3.5 py-2 rounded-xl text-xs font-semibold bg-sky-500 hover:bg-sky-600 text-white transition-all shadow-md flex items-center space-x-1">
                     <i class="fas fa-lock mr-1"></i>
                     <span id="admin-btn-text" data-i18n="nav_login">Login</span>
                 </button>
@@ -112,7 +128,7 @@
                 <div class="flex-1 text-center md:text-left space-y-4">
                     <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-sky-500/10 text-sky-600 dark:text-sky-400 text-xs font-semibold">
                         <i class="fas fa-circle text-[8px] animate-ping"></i>
-                        <span id="hero-status" data-i18n="hero_status">Web Development & Accounting Specialist</span>
+                        <span id="hero-status-typing" class="typing-cursor">Web Developer Specialist</span>
                     </div>
 
                     <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight">
@@ -130,7 +146,7 @@
                         </button>
                     </div>
 
-                    <!-- Quick Action Buttons -->
+                    <!-- Action Buttons -->
                     <div class="flex flex-wrap justify-center md:justify-start gap-4 pt-2">
                         <a href="#contact" class="px-6 py-2.5 rounded-xl bg-sky-500 hover:bg-sky-600 text-white font-medium shadow-lg shadow-sky-500/25 transition-all hover:scale-105" data-i18n="btn_contact">
                             Contact Me
@@ -141,7 +157,7 @@
                         </button>
                     </div>
 
-                    <!-- Social Media Links Section -->
+                    <!-- Social Links -->
                     <div class="pt-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-center md:justify-start space-x-4">
                         <span class="text-xs font-semibold text-slate-400" data-i18n="social_title">Social Media:</span>
                         <div id="social-container" class="flex space-x-3"></div>
@@ -153,27 +169,48 @@
             </div>
         </section>
 
-        <!-- Experience & Skills Section -->
+        <!-- Stats Counter Section -->
+        <section class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="glass-card p-5 rounded-2xl text-center space-y-1">
+                <h3 class="text-3xl font-extrabold text-sky-500">5+</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400" data-i18n="stat_exp">Years Experience</p>
+            </div>
+            <div class="glass-card p-5 rounded-2xl text-center space-y-1">
+                <h3 class="text-3xl font-extrabold text-indigo-500">15+</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400" data-i18n="stat_projects">Web Apps Built</p>
+            </div>
+            <div class="glass-card p-5 rounded-2xl text-center space-y-1">
+                <h3 class="text-3xl font-extrabold text-emerald-500">100%</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400" data-i18n="stat_quality">Client Satisfaction</p>
+            </div>
+            <div class="glass-card p-5 rounded-2xl text-center space-y-1">
+                <h3 class="text-3xl font-extrabold text-amber-500">MBA</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400" data-i18n="stat_degree">Accounting Graduate</p>
+            </div>
+        </section>
+
+        <!-- Skills & Experience Section -->
         <section id="skills" class="space-y-8">
             <div class="text-center max-w-2xl mx-auto space-y-2">
                 <h2 class="text-2xl md:text-3xl font-bold" data-i18n="skills_heading">Skills & Work Experience</h2>
-                <p class="text-slate-500 dark:text-slate-400 text-sm" data-i18n="skills_subheading">A blend of my financial accounting and web technology expertise</p>
+                <p class="text-slate-500 dark:text-slate-400 text-sm" data-i18n="skills_subheading">A blend of my financial accounting & web engineering skills</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Skills Card -->
                 <div class="glass-card p-6 rounded-2xl border border-slate-100 dark:border-slate-800 space-y-4">
                     <h3 class="text-lg font-bold flex items-center space-x-2 border-b border-slate-200 dark:border-slate-800 pb-3">
                         <i class="fas fa-code text-sky-500"></i>
                         <span data-i18n="skills_tech">Technical Skills</span>
                     </h3>
-                    <div class="space-y-3">
+                    <div class="space-y-4">
                         <div>
                             <div class="flex justify-between text-xs font-semibold mb-1">
                                 <span>HTML5 / CSS3 / JavaScript / Tailwind</span>
                                 <span>90%</span>
                             </div>
                             <div class="w-full bg-slate-200 dark:bg-slate-700 h-2 rounded-full overflow-hidden">
-                                <div class="bg-sky-500 h-full rounded-full w-[90%]"></div>
+                                <div class="bg-sky-500 h-full rounded-full w-[90%] transition-all duration-1000"></div>
                             </div>
                         </div>
                         <div>
@@ -182,12 +219,22 @@
                                 <span>95%</span>
                             </div>
                             <div class="w-full bg-slate-200 dark:bg-slate-700 h-2 rounded-full overflow-hidden">
-                                <div class="bg-indigo-500 h-full rounded-full w-[95%]"></div>
+                                <div class="bg-indigo-500 h-full rounded-full w-[95%] transition-all duration-1000"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold mb-1">
+                                <span>GitHub Pages & Firebase Deployment</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="w-full bg-slate-200 dark:bg-slate-700 h-2 rounded-full overflow-hidden">
+                                <div class="bg-emerald-500 h-full rounded-full w-[85%] transition-all duration-1000"></div>
                             </div>
                         </div>
                     </div>
                 </div>
 
+                <!-- Education & Experience Timeline -->
                 <div class="glass-card p-6 rounded-2xl border border-slate-100 dark:border-slate-800 space-y-4">
                     <h3 class="text-lg font-bold flex items-center space-x-2 border-b border-slate-200 dark:border-slate-800 pb-3">
                         <i class="fas fa-briefcase text-sky-500"></i>
@@ -214,7 +261,7 @@
             <div class="flex justify-between items-end border-b border-slate-200 dark:border-slate-800 pb-4">
                 <div>
                     <h2 class="text-2xl md:text-3xl font-bold" data-i18n="projects_title">My Projects</h2>
-                    <p class="text-slate-500 dark:text-slate-400 text-sm" data-i18n="projects_subtitle">Selected web applications and interactive tools I have built</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm" data-i18n="projects_subtitle">Selected web applications and interactive tools I built</p>
                 </div>
                 <button onclick="openModal('modal-project')" class="admin-only hidden px-4 py-2 rounded-xl bg-sky-500 hover:bg-sky-600 text-white font-medium text-xs transition-all flex items-center space-x-1 shadow-md">
                     <i class="fas fa-plus"></i>
@@ -223,6 +270,22 @@
             </div>
 
             <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </section>
+
+        <!-- Recommendations / Testimonials Section -->
+        <section id="testimonials" class="space-y-8">
+            <div class="flex justify-between items-end border-b border-slate-200 dark:border-slate-800 pb-4">
+                <div>
+                    <h2 class="text-2xl md:text-3xl font-bold" data-i18n="review_title">Recommendations & Reviews</h2>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm" data-i18n="review_subtitle">Feedback from colleagues and project collaborators</p>
+                </div>
+                <button onclick="openModal('modal-review')" class="admin-only hidden px-4 py-2 rounded-xl bg-sky-500 hover:bg-sky-600 text-white font-medium text-xs transition-all flex items-center space-x-1 shadow-md">
+                    <i class="fas fa-plus"></i>
+                    <span data-i18n="btn_add_review">Add Review</span>
+                </button>
+            </div>
+
+            <div id="reviews-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
         </section>
 
         <!-- Photo Gallery Section -->
@@ -339,7 +402,7 @@
     <div id="modal-bio" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
             <h3 class="text-lg font-bold">Edit Bio & Title</h3>
-            <input type="text" id="bio-status-input" placeholder="Title (e.g. Web Developer)" class="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm">
+            <input type="text" id="bio-status-input" placeholder="Title (e.g. Web Developer Specialist)" class="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm">
             <textarea id="bio-text-input" placeholder="Your bio description..." rows="4" class="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm"></textarea>
             <div class="flex justify-end space-x-2">
                 <button onclick="closeModal('modal-bio')" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-200 dark:bg-slate-700">Cancel</button>
@@ -379,6 +442,20 @@
         </div>
     </div>
 
+    <!-- Add Review Modal -->
+    <div id="modal-review" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
+            <h3 class="text-lg font-bold">Add Client Recommendation</h3>
+            <input type="text" id="rev-name" placeholder="Client/Colleague Name" class="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm">
+            <input type="text" id="rev-role" placeholder="Designation (e.g. Senior Manager)" class="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm">
+            <textarea id="rev-text" placeholder="Recommendation quote..." rows="3" class="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm"></textarea>
+            <div class="flex justify-end space-x-2">
+                <button onclick="closeModal('modal-review')" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-200 dark:bg-slate-700">Cancel</button>
+                <button onclick="saveReview()" class="px-4 py-2 rounded-xl text-xs font-semibold bg-sky-500 text-white">Save Review</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Add Social Link Modal -->
     <div id="modal-social" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
@@ -412,18 +489,22 @@
         const i18n = {
             bn: {
                 nav_about: "আমার পরিচিতি",
-                nav_skills: "দক্ষতা ও অভিজ্ঞতা",
+                nav_skills: "দক্ষতা",
                 nav_projects: "প্রজেক্টসমূহ",
+                nav_reviews: "রিভিউ",
                 nav_gallery: "গ্যালারি",
                 nav_contact: "যোগাযোগ",
                 nav_login: "লগইন",
                 admin_active: "অ্যাডমিন সক্রিয়",
-                hero_status: "ওয়েব ডেভেলপমেন্ট ও অ্যাকাউন্টিং বিশেষজ্ঞ",
                 hero_welcome: "হ্যালো, আমি",
                 btn_edit_bio: "বায়ো ও টাইটেল পরিবর্তন করুন",
                 btn_contact: "যোগাযোগ করুন",
                 btn_print_cv: "সিভি প্রিন্ট করুন",
                 social_title: "সোশ্যাল মিডিয়া:",
+                stat_exp: "বছরের অভিজ্ঞতা",
+                stat_projects: "ওয়েব অ্যাপ্স নির্মিত",
+                stat_quality: "ক্লায়েন্ট সন্তুষ্টি",
+                stat_degree: "অ্যাকাউন্টিং গ্রাজুয়েট",
                 skills_heading: "দক্ষতা ও কাজের ইতিহাস",
                 skills_subheading: "আমার অ্যাকাউন্টিং এবং ওয়েব টেকনোলজির সমন্বয়",
                 skills_tech: "কারিগরি দক্ষতা",
@@ -432,6 +513,8 @@
                 exp_edu1: "এমবিএ ও বিবিএ (অ্যাকাউন্টিং)",
                 projects_title: "আমার প্রজেক্টসমূহ",
                 projects_subtitle: "আমার তৈরি কিছু উল্লেখযোগ্য ওয়েব টুলস ও অ্যাপ্লিকেশন",
+                review_title: "সুপারিশ ও ক্লায়েন্ট রিভিউ",
+                review_subtitle: "আমার কাজের মূল্যায়ন এবং সহকর্মীদের মন্তব্য",
                 gallery_title: "ছবি গ্যালারি",
                 gallery_subtitle: "ব্যক্তিগত এবং কাজের কিছু স্মরণীয় মুহূর্ত",
                 contact_title: "যোগাযোগ করুন",
@@ -443,22 +526,27 @@
                 btn_send_msg: "বার্তা পাঠান",
                 btn_add: "যোগ করুন",
                 btn_add_project: "নতুন প্রজেক্ট যোগ করুন",
+                btn_add_review: "রিভিউ যোগ করুন",
                 btn_upload_photo: "ছবি আপলোড করুন"
             },
             en: {
                 nav_about: "About Me",
-                nav_skills: "Skills & Experience",
+                nav_skills: "Skills",
                 nav_projects: "Projects",
+                nav_reviews: "Reviews",
                 nav_gallery: "Gallery",
                 nav_contact: "Contact",
                 nav_login: "Login",
                 admin_active: "Admin Active",
-                hero_status: "Web Development & Accounting Specialist",
                 hero_welcome: "Hello, I am",
                 btn_edit_bio: "Edit Bio & Title",
                 btn_contact: "Contact Me",
                 btn_print_cv: "Print CV",
                 social_title: "Social Media:",
+                stat_exp: "Years Experience",
+                stat_projects: "Web Apps Built",
+                stat_quality: "Client Satisfaction",
+                stat_degree: "Accounting Graduate",
                 skills_heading: "Skills & Experience History",
                 skills_subheading: "A blend of my financial accounting & web engineering skills",
                 skills_tech: "Technical Skills",
@@ -467,6 +555,8 @@
                 exp_edu1: "MBA & BBA in Accounting",
                 projects_title: "My Projects",
                 projects_subtitle: "Selected web applications and interactive tools I built",
+                review_title: "Recommendations & Reviews",
+                review_subtitle: "Feedback from colleagues and project collaborators",
                 gallery_title: "Photo Gallery",
                 gallery_subtitle: "Memorable moments from my professional & personal life",
                 contact_title: "Contact Me",
@@ -478,6 +568,7 @@
                 btn_send_msg: "Send Message",
                 btn_add: "Add",
                 btn_add_project: "Add New Project",
+                btn_add_review: "Add Review",
                 btn_upload_photo: "Upload Photo"
             }
         };
@@ -509,6 +600,14 @@
                     img: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&w=500&q=80"
                 }
             ],
+            reviews: [
+                {
+                    id: 1,
+                    name: "Padakhep Management",
+                    role: "Branch Operation",
+                    text: "Mahbub's financial automation skills and administrative web utilities significantly improved our workflow efficiency."
+                }
+            ],
             gallery: [
                 "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=500&q=80",
                 "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=500&q=80"
@@ -520,16 +619,36 @@
             }
         };
 
-        let appData = JSON.parse(localStorage.getItem('portfolio_data_v3')) || DEFAULT_DATA;
+        let appData = JSON.parse(localStorage.getItem('portfolio_data_v4')) || DEFAULT_DATA;
         let isAdmin = false;
-        let currentLang = 'en'; // Default set to English
+        let currentLang = 'en';
+
+        // Hero Typing Effect Titles
+        const typingTitles = [
+            "Web Development Specialist",
+            "Financial Accounts Automator",
+            "UI/UX Web Tool Creator"
+        ];
+        let typingIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
 
         document.addEventListener("DOMContentLoaded", () => {
             renderAll();
+            startTypingEffect();
+
+            window.addEventListener('scroll', () => {
+                const btn = document.getElementById('backToTop');
+                if (window.scrollY > 300) {
+                    btn.classList.remove('opacity-0', 'pointer-events-none');
+                } else {
+                    btn.classList.add('opacity-0', 'pointer-events-none');
+                }
+            });
         });
 
         function saveData() {
-            localStorage.setItem('portfolio_data_v3', JSON.stringify(appData));
+            localStorage.setItem('portfolio_data_v4', JSON.stringify(appData));
             renderAll();
         }
 
@@ -540,7 +659,6 @@
         }
 
         function renderAll() {
-            // Update Dynamic Texts based on Language
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
                 if (i18n[currentLang][key]) {
@@ -549,14 +667,48 @@
             });
 
             if (appData.profileImg) document.getElementById('hero-img').src = appData.profileImg;
-            document.getElementById('hero-status').innerText = currentLang === 'bn' ? (appData.status_bn || appData.status_en) : (appData.status_en || appData.status_bn);
             document.getElementById('hero-bio').innerText = currentLang === 'bn' ? (appData.bio_bn || appData.bio_en) : (appData.bio_en || appData.bio_bn);
 
             renderSocials();
             renderProjects();
+            renderReviews();
             renderGallery();
             renderContact();
             updateAdminUI();
+        }
+
+        function startTypingEffect() {
+            const target = document.getElementById('hero-status-typing');
+            const currentTitle = typingTitles[typingIndex];
+
+            if (isDeleting) {
+                target.innerText = currentTitle.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                target.innerText = currentTitle.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            if (!isDeleting && charIndex === currentTitle.length) {
+                isDeleting = true;
+                setTimeout(startTypingEffect, 1500);
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                typingIndex = (typingIndex + 1) % typingTitles.length;
+                setTimeout(startTypingEffect, 500);
+            } else {
+                setTimeout(startTypingEffect, isDeleting ? 40 : 80);
+            }
+        }
+
+        // Export Data JSON
+        function exportJSONData() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appData, null, 2));
+            const dlAnchorElem = document.createElement('a');
+            dlAnchorElem.setAttribute("href", dataStr);
+            dlAnchorElem.setAttribute("download", "my_portfolio_backup.json");
+            dlAnchorElem.click();
+            showToast("Site data backup downloaded!");
         }
 
         // Admin Auth
@@ -591,6 +743,26 @@
             document.getElementById('admin-btn-text').innerText = isAdmin ? (currentLang === 'bn' ? 'লগআউট' : 'Logout') : (currentLang === 'bn' ? 'লগইন' : 'Login');
         }
 
+        // Bio Save
+        function openBioModal() {
+            document.getElementById('bio-status-input').value = currentLang === 'bn' ? (appData.status_bn || '') : (appData.status_en || '');
+            document.getElementById('bio-text-input').value = currentLang === 'bn' ? (appData.bio_bn || '') : (appData.bio_en || '');
+            openModal('modal-bio');
+        }
+
+        function saveBio() {
+            if (currentLang === 'bn') {
+                appData.status_bn = document.getElementById('bio-status-input').value;
+                appData.bio_bn = document.getElementById('bio-text-input').value;
+            } else {
+                appData.status_en = document.getElementById('bio-status-input').value;
+                appData.bio_en = document.getElementById('bio-text-input').value;
+            }
+            saveData();
+            closeModal('modal-bio');
+            showToast("Bio updated successfully!");
+        }
+
         // Profile Image Save
         function saveProfileImage() {
             const url = document.getElementById('profile-img-url').value;
@@ -611,26 +783,6 @@
                 closeModal('modal-profile-img');
                 showToast("Profile image updated!");
             }
-        }
-
-        // Bio Save
-        function openBioModal() {
-            document.getElementById('bio-status-input').value = currentLang === 'bn' ? (appData.status_bn || '') : (appData.status_en || '');
-            document.getElementById('bio-text-input').value = currentLang === 'bn' ? (appData.bio_bn || '') : (appData.bio_en || '');
-            openModal('modal-bio');
-        }
-
-        function saveBio() {
-            if (currentLang === 'bn') {
-                appData.status_bn = document.getElementById('bio-status-input').value;
-                appData.bio_bn = document.getElementById('bio-text-input').value;
-            } else {
-                appData.status_en = document.getElementById('bio-status-input').value;
-                appData.bio_en = document.getElementById('bio-text-input').value;
-            }
-            saveData();
-            closeModal('modal-bio');
-            showToast("Bio updated successfully!");
         }
 
         // Contact Save
@@ -676,6 +828,26 @@
                             ${isAdmin ? `<button onclick="deleteProject(${p.id})" class="text-xs text-rose-500 hover:text-rose-600 font-semibold"><i class="fas fa-trash mr-1"></i>Delete</button>` : ''}
                         </div>
                     </div>
+                </div>
+            `).join('');
+        }
+
+        function renderReviews() {
+            const grid = document.getElementById('reviews-grid');
+            if (!appData.reviews) appData.reviews = [];
+            grid.innerHTML = appData.reviews.map(r => `
+                <div class="glass-card p-6 rounded-2xl border border-slate-100 dark:border-slate-800 space-y-3 relative">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-full bg-sky-500/10 text-sky-500 font-bold flex items-center justify-center text-sm">
+                            ${r.name.charAt(0)}
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-sm text-slate-800 dark:text-slate-100">${r.name}</h4>
+                            <p class="text-xs text-slate-400">${r.role}</p>
+                        </div>
+                    </div>
+                    <p class="text-xs text-slate-600 dark:text-slate-300 italic">"${r.text}"</p>
+                    ${isAdmin ? `<button onclick="deleteReview(${r.id})" class="absolute top-4 right-4 text-xs text-rose-500 hover:text-rose-600"><i class="fas fa-trash"></i></button>` : ''}
                 </div>
             `).join('');
         }
@@ -749,6 +921,25 @@
             appData.projects = appData.projects.filter(p => p.id !== id);
             saveData();
             showToast("Project deleted");
+        }
+
+        function saveReview() {
+            const name = document.getElementById('rev-name').value;
+            const role = document.getElementById('rev-role').value;
+            const text = document.getElementById('rev-text').value;
+            if (name && text) {
+                if (!appData.reviews) appData.reviews = [];
+                appData.reviews.push({ id: Date.now(), name, role, text });
+                saveData();
+                closeModal('modal-review');
+                showToast("Recommendation added!");
+            }
+        }
+
+        function deleteReview(id) {
+            appData.reviews = appData.reviews.filter(r => r.id !== id);
+            saveData();
+            showToast("Review deleted");
         }
 
         function saveGalleryImage() {
