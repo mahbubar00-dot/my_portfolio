@@ -29,22 +29,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        body {
-            font-family: 'Hind Siliguri', 'Inter', sans-serif;
-        }
+        body { font-family: 'Hind Siliguri', 'Inter', sans-serif; }
         .glass-card {
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.88);
             backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(226, 232, 240, 0.8);
         }
         .dark .glass-card {
-            background: rgba(30, 41, 59, 0.85);
+            background: rgba(30, 41, 59, 0.88);
             backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
         @media print {
             .no-print { display: none !important; }
-            .print-only { display: block !important; }
             body { background: white; color: black; }
         }
     </style>
@@ -53,8 +50,8 @@
 
     <!-- Toast Notification -->
     <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 px-5 py-3 rounded-xl shadow-2xl flex items-center space-x-3 pointer-events-none">
-        <i id="toast-icon" class="fas fa-check-circle text-emerald-400 dark:text-emerald-600 text-xl"></i>
-        <span id="toast-msg" class="font-medium">সম্পন্ন হয়েছে!</span>
+        <i class="fas fa-check-circle text-emerald-400 text-xl"></i>
+        <span id="toast-msg" class="font-medium">Success!</span>
     </div>
 
     <!-- Navigation Bar -->
@@ -65,22 +62,23 @@
                     Md. Mahbub Alam
                 </span>
                 <span id="admin-badge" class="hidden px-2 py-0.5 text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 rounded-full">
-                    <i class="fas fa-user-shield mr-1"></i><span data-i18n="admin_active">অ্যাডমিন</span>
+                    <i class="fas fa-user-shield mr-1"></i><span data-i18n="admin_active">Admin Mode</span>
                 </span>
             </div>
 
             <div class="hidden md:flex items-center space-x-6 text-sm font-medium">
-                <a href="#about" class="hover:text-sky-500 transition-colors" data-i18n="nav_about">আমার পরিচিতি</a>
-                <a href="#skills" class="hover:text-sky-500 transition-colors" data-i18n="nav_skills">দক্ষতা ও অভিজ্ঞতা</a>
-                <a href="#projects" class="hover:text-sky-500 transition-colors" data-i18n="nav_projects">প্রজেক্টসমূহ</a>
-                <a href="#gallery" class="hover:text-sky-500 transition-colors" data-i18n="nav_gallery">গ্যালারি</a>
-                <a href="#contact" class="hover:text-sky-500 transition-colors" data-i18n="nav_contact">যোগাযোগ</a>
+                <a href="#about" class="hover:text-sky-500 transition-colors" data-i18n="nav_about">About Me</a>
+                <a href="#skills" class="hover:text-sky-500 transition-colors" data-i18n="nav_skills">Skills & Experience</a>
+                <a href="#projects" class="hover:text-sky-500 transition-colors" data-i18n="nav_projects">Projects</a>
+                <a href="#gallery" class="hover:text-sky-500 transition-colors" data-i18n="nav_gallery">Gallery</a>
+                <a href="#contact" class="hover:text-sky-500 transition-colors" data-i18n="nav_contact">Contact</a>
             </div>
 
             <div class="flex items-center space-x-3">
-                <!-- Language Toggle -->
-                <button id="lang-btn" onclick="toggleLanguage()" class="p-2 rounded-lg bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors text-xs font-bold px-3">
-                    <i class="fas fa-globe mr-1 text-sky-500"></i><span id="lang-text">EN</span>
+                <!-- Language Toggle Button -->
+                <button onclick="toggleLanguage()" class="p-2 rounded-lg bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors text-xs font-bold px-3 flex items-center space-x-1">
+                    <i class="fas fa-globe text-sky-500"></i>
+                    <span id="lang-btn-text">বাংলা</span>
                 </button>
 
                 <!-- Theme Toggle -->
@@ -90,9 +88,9 @@
                 </button>
 
                 <!-- Admin Login/Logout Button -->
-                <button id="admin-btn" onclick="handleAdminAuth()" class="px-3 py-1.5 rounded-lg text-xs font-medium bg-sky-500 hover:bg-sky-600 text-white transition-colors flex items-center space-x-1 shadow-sm">
-                    <i class="fas fa-lock"></i>
-                    <span id="admin-btn-text" data-i18n="nav_login">লগইন</span>
+                <button id="admin-btn" onclick="handleAdminAuth()" class="px-4 py-2 rounded-xl text-xs font-semibold bg-sky-500 hover:bg-sky-600 text-white transition-all shadow-md flex items-center space-x-1">
+                    <i class="fas fa-lock mr-1"></i>
+                    <span id="admin-btn-text" data-i18n="nav_login">Login</span>
                 </button>
             </div>
         </div>
@@ -106,7 +104,7 @@
             <div class="flex flex-col md:flex-row items-center gap-8">
                 <div class="relative group">
                     <img id="hero-img" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80" alt="Profile" class="w-40 h-40 md:w-48 md:h-48 rounded-full object-cover ring-4 ring-sky-500/30 shadow-2xl">
-                    <button onclick="openProfileImageModal()" class="admin-only hidden absolute bottom-2 right-2 bg-sky-500 text-white p-2.5 rounded-full shadow-lg hover:bg-sky-600 transition-transform hover:scale-110">
+                    <button onclick="openModal('modal-profile-img')" class="admin-only hidden absolute bottom-2 right-2 bg-sky-500 text-white p-3 rounded-full shadow-lg hover:bg-sky-600 transition-transform hover:scale-110">
                         <i class="fas fa-camera text-sm"></i>
                     </button>
                 </div>
@@ -114,41 +112,41 @@
                 <div class="flex-1 text-center md:text-left space-y-4">
                     <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-sky-500/10 text-sky-600 dark:text-sky-400 text-xs font-semibold">
                         <i class="fas fa-circle text-[8px] animate-ping"></i>
-                        <span id="hero-status" data-i18n="hero_status">ওয়েব ডেভেলপমেন্ট ও অ্যাকাউন্টিং বিশেষজ্ঞ</span>
+                        <span id="hero-status" data-i18n="hero_status">Web Development & Accounting Specialist</span>
                     </div>
 
                     <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight">
-                        <span data-i18n="hero_welcome">হ্যালো, আমি</span> 
+                        <span data-i18n="hero_welcome">Hello, I am</span> 
                         <span class="bg-gradient-to-r from-sky-500 to-indigo-600 bg-clip-text text-transparent">Md. Mahbub Alam</span>
                     </h1>
 
                     <p id="hero-bio" class="text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl text-base md:text-lg">
-                        আমি একজন আগ্রহী ওয়েব ডেভেলপার এবং ফাইনান্সিয়াল ম্যানেজমেন্ট স্পেশালিস্ট। অ্যাকাউন্টস অটোমেশন, ডিজিটাল ফাইল প্রসেসিং অ্যাপস এবং ইন্টারঅ্যাক্টিভ ওয়েব সমাধান তৈরি করতে আমি ভালোবাসি।
+                        I am a passionate Web Developer and Financial Management Specialist. I specialize in building automated cash books, custom administrative web tools, and responsive single-page web applications.
                     </p>
 
-                    <button onclick="openBioEditModal()" class="admin-only hidden px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 transition-colors">
-                        <i class="fas fa-edit mr-1"></i> বায়ো ও টাইটেল পরিবর্তন করুন
-                    </button>
+                    <div class="pt-1">
+                        <button onclick="openBioModal()" class="admin-only hidden px-3 py-1.5 rounded-xl text-xs font-semibold bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20 hover:bg-sky-500/20 transition-all">
+                            <i class="fas fa-edit mr-1"></i> <span data-i18n="btn_edit_bio">Edit Bio & Title</span>
+                        </button>
+                    </div>
 
                     <!-- Quick Action Buttons -->
                     <div class="flex flex-wrap justify-center md:justify-start gap-4 pt-2">
                         <a href="#contact" class="px-6 py-2.5 rounded-xl bg-sky-500 hover:bg-sky-600 text-white font-medium shadow-lg shadow-sky-500/25 transition-all hover:scale-105" data-i18n="btn_contact">
-                            যোগাযোগ করুন
+                            Contact Me
                         </a>
                         <button onclick="window.print()" class="px-6 py-2.5 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 font-medium transition-all hover:scale-105 flex items-center space-x-2">
                             <i class="fas fa-print"></i>
-                            <span data-i18n="btn_print_cv">সিভি প্রিন্ট করুন</span>
+                            <span data-i18n="btn_print_cv">Print CV</span>
                         </button>
                     </div>
 
                     <!-- Social Media Links Section -->
                     <div class="pt-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-center md:justify-start space-x-4">
-                        <span class="text-xs font-semibold text-slate-400" data-i18n="social_title">সোশ্যাল মিডিয়া:</span>
-                        <div id="social-container" class="flex space-x-3">
-                            <!-- Social Icons Dynamically Injected -->
-                        </div>
-                        <button onclick="openSocialModal()" class="admin-only hidden text-sky-500 hover:text-sky-600 p-1 rounded-md border border-sky-500/30 text-xs">
-                            <i class="fas fa-plus"></i> <span data-i18n="btn_add">যোগ করুন</span>
+                        <span class="text-xs font-semibold text-slate-400" data-i18n="social_title">Social Media:</span>
+                        <div id="social-container" class="flex space-x-3"></div>
+                        <button onclick="openModal('modal-social')" class="admin-only hidden text-sky-500 hover:text-sky-600 px-2 py-1 rounded-md border border-sky-500/30 text-xs font-semibold">
+                            <i class="fas fa-plus mr-1"></i> <span data-i18n="btn_add">Add</span>
                         </button>
                     </div>
                 </div>
@@ -158,16 +156,15 @@
         <!-- Experience & Skills Section -->
         <section id="skills" class="space-y-8">
             <div class="text-center max-w-2xl mx-auto space-y-2">
-                <h2 class="text-2xl md:text-3xl font-bold" data-i18n="skills_heading">দক্ষতা ও কাজের ইতিহাস</h2>
-                <p class="text-slate-500 dark:text-slate-400 text-sm" data-i18n="skills_subheading">আমার অ্যাকাউন্টিং এবং ওয়েব টেকনোলজির সমন্বয়</p>
+                <h2 class="text-2xl md:text-3xl font-bold" data-i18n="skills_heading">Skills & Work Experience</h2>
+                <p class="text-slate-500 dark:text-slate-400 text-sm" data-i18n="skills_subheading">A blend of my financial accounting and web technology expertise</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Skills Card -->
                 <div class="glass-card p-6 rounded-2xl border border-slate-100 dark:border-slate-800 space-y-4">
                     <h3 class="text-lg font-bold flex items-center space-x-2 border-b border-slate-200 dark:border-slate-800 pb-3">
                         <i class="fas fa-code text-sky-500"></i>
-                        <span data-i18n="skills_tech">কারিগরি দক্ষতা</span>
+                        <span data-i18n="skills_tech">Technical Skills</span>
                     </h3>
                     <div class="space-y-3">
                         <div>
@@ -188,34 +185,24 @@
                                 <div class="bg-indigo-500 h-full rounded-full w-[95%]"></div>
                             </div>
                         </div>
-                        <div>
-                            <div class="flex justify-between text-xs font-semibold mb-1">
-                                <span>GitHub Pages & Static Web Hosting</span>
-                                <span>85%</span>
-                            </div>
-                            <div class="w-full bg-slate-200 dark:bg-slate-700 h-2 rounded-full overflow-hidden">
-                                <div class="bg-emerald-500 h-full rounded-full w-[85%]"></div>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
-                <!-- Education & Experience Timeline -->
                 <div class="glass-card p-6 rounded-2xl border border-slate-100 dark:border-slate-800 space-y-4">
                     <h3 class="text-lg font-bold flex items-center space-x-2 border-b border-slate-200 dark:border-slate-800 pb-3">
                         <i class="fas fa-briefcase text-sky-500"></i>
-                        <span data-i18n="exp_title">অভিজ্ঞতা ও শিক্ষাগত যোগ্যতা</span>
+                        <span data-i18n="exp_title">Experience & Education</span>
                     </h3>
                     <div class="space-y-4 text-xs md:text-sm">
                         <div class="border-l-2 border-sky-500 pl-4 space-y-1">
                             <span class="text-xs font-bold text-sky-500">2019 - 2024</span>
-                            <h4 class="font-bold text-slate-800 dark:text-slate-100">কমিউনিটি ম্যানেজার ও ব্র্যাঞ্চ অ্যাকাউন্ট্যান্ট</h4>
-                            <p class="text-slate-500 dark:text-slate-400">পদক্ষেপ মানবিক উন্নয়ন কেন্দ্র</p>
+                            <h4 class="font-bold text-slate-800 dark:text-slate-100" data-i18n="exp_job1">Community Manager & Branch Accountant</h4>
+                            <p class="text-slate-500 dark:text-slate-400">Padakhep Manabik Unnayan Kendra</p>
                         </div>
                         <div class="border-l-2 border-indigo-500 pl-4 space-y-1">
                             <span class="text-xs font-bold text-indigo-500">2015 - 2016</span>
-                            <h4 class="font-bold text-slate-800 dark:text-slate-100">MBA ও BBA (Accounting)</h4>
-                            <p class="text-slate-500 dark:text-slate-400">সরকারি বিএম কলেজ, বরিশাল (জাতীয় বিশ্ববিদ্যালয়)</p>
+                            <h4 class="font-bold text-slate-800 dark:text-slate-100" data-i18n="exp_edu1">MBA & BBA in Accounting</h4>
+                            <p class="text-slate-500 dark:text-slate-400">Govt. BM College, Barishal (National University)</p>
                         </div>
                     </div>
                 </div>
@@ -226,43 +213,39 @@
         <section id="projects" class="space-y-8">
             <div class="flex justify-between items-end border-b border-slate-200 dark:border-slate-800 pb-4">
                 <div>
-                    <h2 class="text-2xl md:text-3xl font-bold" data-i18n="projects_title">আমার প্রজেক্টসমূহ</h2>
-                    <p class="text-slate-500 dark:text-slate-400 text-sm" data-i18n="projects_subtitle">আমার তৈরি কিছু উল্লেখযোগ্য ওয়েব টুলস ও অ্যাপ্লিকেশন</p>
+                    <h2 class="text-2xl md:text-3xl font-bold" data-i18n="projects_title">My Projects</h2>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm" data-i18n="projects_subtitle">Selected web applications and interactive tools I have built</p>
                 </div>
-                <button onclick="openProjectModal()" class="admin-only hidden px-4 py-2 rounded-xl bg-sky-500 hover:bg-sky-600 text-white font-medium text-xs transition-all flex items-center space-x-1 shadow-md">
+                <button onclick="openModal('modal-project')" class="admin-only hidden px-4 py-2 rounded-xl bg-sky-500 hover:bg-sky-600 text-white font-medium text-xs transition-all flex items-center space-x-1 shadow-md">
                     <i class="fas fa-plus"></i>
-                    <span data-i18n="btn_add_project">নতুন প্রজেক্ট যোগ করুন</span>
+                    <span data-i18n="btn_add_project">Add Project</span>
                 </button>
             </div>
 
-            <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Projects will be dynamically rendered here -->
-            </div>
+            <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
         </section>
 
         <!-- Photo Gallery Section -->
         <section id="gallery" class="space-y-8">
             <div class="flex justify-between items-end border-b border-slate-200 dark:border-slate-800 pb-4">
                 <div>
-                    <h2 class="text-2xl md:text-3xl font-bold" data-i18n="gallery_title">ছবি গ্যালারি</h2>
-                    <p class="text-slate-500 dark:text-slate-400 text-sm" data-i18n="gallery_subtitle">ব্যক্তিগত এবং কাজের কিছু স্মরণীয় মুহূর্ত</p>
+                    <h2 class="text-2xl md:text-3xl font-bold" data-i18n="gallery_title">Photo Gallery</h2>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm" data-i18n="gallery_subtitle">Memorable moments from my professional and personal life</p>
                 </div>
-                <button onclick="openGalleryUploadModal()" class="admin-only hidden px-4 py-2 rounded-xl bg-sky-500 hover:bg-sky-600 text-white font-medium text-xs transition-all flex items-center space-x-1 shadow-md">
+                <button onclick="openModal('modal-gallery')" class="admin-only hidden px-4 py-2 rounded-xl bg-sky-500 hover:bg-sky-600 text-white font-medium text-xs transition-all flex items-center space-x-1 shadow-md">
                     <i class="fas fa-upload"></i>
-                    <span data-i18n="btn_upload_photo">ছবি আপলোড করুন</span>
+                    <span data-i18n="btn_upload_photo">Upload Photo</span>
                 </button>
             </div>
 
-            <div id="gallery-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                <!-- Gallery Images dynamically rendered -->
-            </div>
+            <div id="gallery-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"></div>
         </section>
 
         <!-- Contact Section -->
         <section id="contact" class="glass-card rounded-3xl p-8 md:p-12 border border-slate-100 dark:border-slate-800 space-y-8">
             <div class="text-center max-w-2xl mx-auto space-y-2">
-                <h2 class="text-2xl md:text-3xl font-bold" data-i18n="contact_title">যোগাযোগ করুন</h2>
-                <p class="text-slate-500 dark:text-slate-400 text-sm" data-i18n="contact_subtitle">যেকোনো প্রশ্ন বা প্রজেক্ট আলোচনার জন্য আমাকে বার্তা পাঠান</p>
+                <h2 class="text-2xl md:text-3xl font-bold" data-i18n="contact_title">Contact Me</h2>
+                <p class="text-slate-500 dark:text-slate-400 text-sm" data-i18n="contact_subtitle">Feel free to reach out for any inquiries or project collaborations</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -273,8 +256,8 @@
                             <i class="fas fa-phone-alt"></i>
                         </div>
                         <div>
-                            <span class="text-xs text-slate-400 block" data-i18n="contact_phone">ফোন / হোয়াটসঅ্যাপ:</span>
-                            <span id="contact-phone" class="font-medium text-sm">+৮৮০ ১৭০০ ০০০০০০</span>
+                            <span class="text-xs text-slate-400 block" data-i18n="contact_phone">Phone / WhatsApp:</span>
+                            <span id="contact-phone" class="font-medium text-sm">+880 1700 000000</span>
                         </div>
                     </div>
                     <div class="flex items-center space-x-3">
@@ -282,7 +265,7 @@
                             <i class="fas fa-envelope"></i>
                         </div>
                         <div>
-                            <span class="text-xs text-slate-400 block" data-i18n="contact_email">ইমেইল:</span>
+                            <span class="text-xs text-slate-400 block" data-i18n="contact_email">Email:</span>
                             <span id="contact-email" class="font-medium text-sm">mahbub.alam@example.com</span>
                         </div>
                     </div>
@@ -291,49 +274,49 @@
                             <i class="fas fa-map-marker-alt"></i>
                         </div>
                         <div>
-                            <span class="text-xs text-slate-400 block" data-i18n="contact_address">ঠিকানা:</span>
-                            <span id="contact-address" class="font-medium text-sm">সাহেবগঞ্জ, বাকেরগঞ্জ, বরিশাল</span>
+                            <span class="text-xs text-slate-400 block" data-i18n="contact_address">Address:</span>
+                            <span id="contact-address" class="font-medium text-sm">Sahebganj, Bakerganj, Barishal</span>
                         </div>
                     </div>
-                    <button onclick="openContactEditModal()" class="admin-only hidden w-full py-2 bg-slate-200 dark:bg-slate-800 text-xs font-semibold rounded-xl hover:bg-slate-300 transition-colors mt-2">
-                        <i class="fas fa-edit mr-1"></i> <span data-i18n="btn_edit_contact">তথ্য সংশোধন করুন</span>
+                    
+                    <button onclick="openContactModal()" class="admin-only hidden w-full py-2.5 bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20 text-xs font-semibold rounded-xl hover:bg-sky-500/20 transition-colors mt-2">
+                        <i class="fas fa-edit mr-1"></i> <span data-i18n="btn_edit_contact">Edit Contact Details</span>
                     </button>
                 </div>
 
                 <!-- Contact Form -->
                 <form onsubmit="handleContactSubmit(event)" class="md:col-span-2 space-y-4">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <input type="text" required placeholder="আপনার নাম" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:ring-2 focus:ring-sky-500 outline-none transition-all">
-                        <input type="email" required placeholder="আপনার ইমেইল" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:ring-2 focus:ring-sky-500 outline-none transition-all">
+                        <input type="text" required placeholder="Your Name" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:ring-2 focus:ring-sky-500 outline-none">
+                        <input type="email" required placeholder="Your Email" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:ring-2 focus:ring-sky-500 outline-none">
                     </div>
-                    <textarea rows="4" required placeholder="বার্তা লিখুন..." class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:ring-2 focus:ring-sky-500 outline-none transition-all"></textarea>
+                    <textarea rows="4" required placeholder="Write your message here..." class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:ring-2 focus:ring-sky-500 outline-none"></textarea>
                     <button type="submit" class="px-8 py-3 bg-sky-500 hover:bg-sky-600 text-white font-medium text-sm rounded-xl shadow-lg shadow-sky-500/25 transition-all">
-                        <i class="fas fa-paper-plane mr-2"></i><span data-i18n="btn_send_msg">বার্তা পাঠান</span>
+                        <i class="fas fa-paper-plane mr-2"></i><span data-i18n="btn_send_msg">Send Message</span>
                     </button>
                 </form>
             </div>
         </section>
     </main>
 
-    <!-- Footer -->
     <footer class="bg-slate-100 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 py-6 text-center text-xs text-slate-500 no-print">
         <p>© 2026 Md. Mahbub Alam. All Rights Reserved.</p>
     </footer>
 
-    <!-- MODALS SECTION -->
+    <!-- MODALS -->
 
     <!-- Admin Login Modal -->
     <div id="modal-admin" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl border border-slate-200 dark:border-slate-700">
-            <h3 class="text-lg font-bold text-slate-800 dark:text-slate-100 flex items-center space-x-2">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
+            <h3 class="text-lg font-bold flex items-center space-x-2">
                 <i class="fas fa-lock text-sky-500"></i>
-                <span>অ্যাডমিন পাসকোড দিন</span>
+                <span>Admin Passcode</span>
             </h3>
-            <p class="text-xs text-slate-500">সাইটে তথ্য যোগ বা এডিট করতে পাসওয়ার্ড দিন। (Default: admin123)</p>
-            <input type="password" id="admin-pass-input" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm focus:ring-2 focus:ring-sky-500 outline-none">
+            <p class="text-xs text-slate-500">Enter admin passcode to edit or manage content. (Default: admin123)</p>
+            <input type="password" id="admin-pass-input" placeholder="Passcode..." class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm outline-none">
             <div class="flex justify-end space-x-2">
-                <button onclick="closeModal('modal-admin')" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-200 dark:bg-slate-700">বাতিল</button>
-                <button onclick="submitAdminPass()" class="px-4 py-2 rounded-xl text-xs font-semibold bg-sky-500 hover:bg-sky-600 text-white">প্রবেশ করুন</button>
+                <button onclick="closeModal('modal-admin')" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-200 dark:bg-slate-700">Cancel</button>
+                <button onclick="submitAdminPass()" class="px-4 py-2 rounded-xl text-xs font-semibold bg-sky-500 hover:bg-sky-600 text-white">Login</button>
             </div>
         </div>
     </div>
@@ -341,56 +324,57 @@
     <!-- Edit Profile Image Modal -->
     <div id="modal-profile-img" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
-            <h3 class="text-lg font-bold">প্রোফাইল ছবি পরিবর্তন করুন</h3>
-            <input type="text" id="profile-img-url" placeholder="অনলাইন ছবি ইউআরএল (URL)" class="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm">
-            <p class="text-xs text-center text-slate-400">অথবা ফাইল থেকে ছবি আপলোড করুন:</p>
+            <h3 class="text-lg font-bold">Change Profile Photo</h3>
+            <input type="text" id="profile-img-url" placeholder="Online Image URL" class="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm">
+            <p class="text-xs text-center text-slate-400">Or upload image file from device:</p>
             <input type="file" id="profile-img-file" accept="image/*" class="w-full text-xs text-slate-400">
             <div class="flex justify-end space-x-2">
-                <button onclick="closeModal('modal-profile-img')" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-200 dark:bg-slate-700">বাতিল</button>
-                <button onclick="saveProfileImage()" class="px-4 py-2 rounded-xl text-xs font-semibold bg-sky-500 text-white">সেভ করুন</button>
+                <button onclick="closeModal('modal-profile-img')" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-200 dark:bg-slate-700">Cancel</button>
+                <button onclick="saveProfileImage()" class="px-4 py-2 rounded-xl text-xs font-semibold bg-sky-500 text-white">Save</button>
             </div>
         </div>
     </div>
 
-    <!-- Edit Bio & Status Modal -->
+    <!-- Edit Bio Modal -->
     <div id="modal-bio" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
-            <h3 class="text-lg font-bold">বায়ো ও পজিশন পরিবর্তন</h3>
-            <input type="text" id="bio-status-input" placeholder="পজিশন (যেমন: ওয়েব ডেভেলপার)" class="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm">
-            <textarea id="bio-text-input" placeholder="আপনার পরিচিতি বিবরণ..." rows="4" class="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm"></textarea>
+            <h3 class="text-lg font-bold">Edit Bio & Title</h3>
+            <input type="text" id="bio-status-input" placeholder="Title (e.g. Web Developer)" class="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm">
+            <textarea id="bio-text-input" placeholder="Your bio description..." rows="4" class="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm"></textarea>
             <div class="flex justify-end space-x-2">
-                <button onclick="closeModal('modal-bio')" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-200 dark:bg-slate-700">বাতিল</button>
-                <button onclick="saveBio()" class="px-4 py-2 rounded-xl text-xs font-semibold bg-sky-500 text-white">সেভ করুন</button>
+                <button onclick="closeModal('modal-bio')" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-200 dark:bg-slate-700">Cancel</button>
+                <button onclick="saveBio()" class="px-4 py-2 rounded-xl text-xs font-semibold bg-sky-500 text-white">Save</button>
             </div>
         </div>
     </div>
 
     <!-- Edit Contact Info Modal -->
-    <div id="modal-contact-edit" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div id="modal-contact" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
-            <h3 class="text-lg font-bold">যোগাযোগের তথ্য এডিট করুন</h3>
-            <input type="text" id="edit-contact-phone" placeholder="ফোন নম্বর (+880...)" class="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm">
-            <input type="email" id="edit-contact-email" placeholder="ইমেইল এড্রেস" class="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm">
-            <input type="text" id="edit-contact-address" placeholder="ঠিকানা" class="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm">
+            <h3 class="text-lg font-bold">Edit Contact Information</h3>
+            <input type="text" id="edit-phone" placeholder="Phone Number" class="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm">
+            <input type="email" id="edit-email" placeholder="Email Address" class="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm">
+            <input type="text" id="edit-address" placeholder="Address" class="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm">
             <div class="flex justify-end space-x-2">
-                <button onclick="closeModal('modal-contact-edit')" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-200 dark:bg-slate-700">বাতিল</button>
-                <button onclick="saveContactDetails()" class="px-4 py-2 rounded-xl text-xs font-semibold bg-sky-500 text-white">সেভ করুন</button>
+                <button onclick="closeModal('modal-contact')" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-200 dark:bg-slate-700">Cancel</button>
+                <button onclick="saveContact()" class="px-4 py-2 rounded-xl text-xs font-semibold bg-sky-500 text-white">Save</button>
             </div>
         </div>
     </div>
 
-    <!-- Add/Edit Project Modal -->
+    <!-- Add Project Modal -->
     <div id="modal-project" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl">
-            <h3 class="text-lg font-bold">নতুন প্রজেক্ট যোগ করুন</h3>
-            <input type="text" id="proj-title" placeholder="প্রজেক্টের নাম" class="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm">
-            <textarea id="proj-desc" placeholder="প্রজেক্ট বিবরণ..." class="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm" rows="3"></textarea>
-            <input type="text" id="proj-link" placeholder="প্রজেক্ট ইউআরএল (Link)" class="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm">
-            <input type="text" id="proj-img" placeholder="ছবি ইউআরএল (Image URL)" class="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm">
-            <input type="file" id="proj-file" accept="image/*" class="text-xs text-slate-400">
+            <h3 class="text-lg font-bold">Add New Project</h3>
+            <input type="text" id="proj-title" placeholder="Project Title" class="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm">
+            <textarea id="proj-desc" placeholder="Project Description..." class="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm" rows="3"></textarea>
+            <input type="text" id="proj-link" placeholder="Project Link (URL)" class="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm">
+            <input type="text" id="proj-img" placeholder="Image URL" class="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm">
+            <p class="text-xs text-center text-slate-400">Or upload photo from device:</p>
+            <input type="file" id="proj-file" accept="image/*" class="w-full text-xs text-slate-400">
             <div class="flex justify-end space-x-2 pt-2">
-                <button onclick="closeModal('modal-project')" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-200 dark:bg-slate-700">বাতিল</button>
-                <button onclick="saveProject()" class="px-4 py-2 rounded-xl text-xs font-semibold bg-sky-500 hover:bg-sky-600 text-white">সেভ করুন</button>
+                <button onclick="closeModal('modal-project')" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-200 dark:bg-slate-700">Cancel</button>
+                <button onclick="saveProject()" class="px-4 py-2 rounded-xl text-xs font-semibold bg-sky-500 hover:bg-sky-600 text-white">Save Project</button>
             </div>
         </div>
     </div>
@@ -398,13 +382,13 @@
     <!-- Add Social Link Modal -->
     <div id="modal-social" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
-            <h3 class="text-lg font-bold">সোশ্যাল মিডিয়া যুক্ত করুন</h3>
-            <input type="text" id="social-name" placeholder="নাম (যেমন: Facebook, GitHub)" class="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm">
-            <input type="text" id="social-url" placeholder="প্রোফাইল লিংক (URL)" class="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm">
-            <input type="text" id="social-icon" placeholder="Icon (যেমন: fab fa-facebook)" class="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm">
+            <h3 class="text-lg font-bold">Add Social Link</h3>
+            <input type="text" id="social-name" placeholder="Name (e.g. Facebook, GitHub)" class="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm">
+            <input type="text" id="social-url" placeholder="Profile Link (URL)" class="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm">
+            <input type="text" id="social-icon" placeholder="Icon (e.g. fab fa-facebook)" class="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm">
             <div class="flex justify-end space-x-2">
-                <button onclick="closeModal('modal-social')" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-200 dark:bg-slate-700">বাতিল</button>
-                <button onclick="saveSocial()" class="px-4 py-2 rounded-xl text-xs font-semibold bg-sky-500 text-white">সেভ করুন</button>
+                <button onclick="closeModal('modal-social')" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-200 dark:bg-slate-700">Cancel</button>
+                <button onclick="saveSocial()" class="px-4 py-2 rounded-xl text-xs font-semibold bg-sky-500 text-white">Save</button>
             </div>
         </div>
     </div>
@@ -412,59 +396,19 @@
     <!-- Gallery Upload Modal -->
     <div id="modal-gallery" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
-            <h3 class="text-lg font-bold">গ্যালারিতে নতুন ছবি যোগ করুন</h3>
-            <input type="text" id="gal-url" placeholder="ছবির ইউআরএল (Image URL)" class="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm">
-            <p class="text-xs text-center text-slate-400">অথবা ফাইল থেকে আপলোড করুন:</p>
+            <h3 class="text-lg font-bold">Upload Gallery Photo</h3>
+            <input type="text" id="gal-url" placeholder="Image URL" class="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm">
+            <p class="text-xs text-center text-slate-400">Or upload photo file from device:</p>
             <input type="file" id="gal-file" accept="image/*" class="w-full text-xs text-slate-400">
             <div class="flex justify-end space-x-2">
-                <button onclick="closeModal('modal-gallery')" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-200 dark:bg-slate-700">বাতিল</button>
-                <button onclick="saveGalleryImage()" class="px-4 py-2 rounded-xl text-xs font-semibold bg-sky-500 text-white">সেভ করুন</button>
+                <button onclick="closeModal('modal-gallery')" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-200 dark:bg-slate-700">Cancel</button>
+                <button onclick="saveGalleryImage()" class="px-4 py-2 rounded-xl text-xs font-semibold bg-sky-500 text-white">Upload & Save</button>
             </div>
         </div>
     </div>
 
-    <!-- JavaScript Logic -->
+    <!-- JavaScript Translation & Logic -->
     <script>
-        const DEFAULT_DATA = {
-            profileImg: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80",
-            status: "ওয়েব ডেভেলপমেন্ট ও অ্যাকাউন্টিং বিশেষজ্ঞ",
-            bio: "আমি একজন আগ্রহী ওয়েব ডেভেলপার এবং ফাইনান্সিয়াল ম্যানেজমেন্ট স্পেশালিস্ট। অ্যাকাউন্টস অটোমেশন, ডিজিটাল ফাইল প্রসেসিং অ্যাপস এবং ইন্টারঅ্যাক্টিভ ওয়েব সমাধান তৈরি করতে আমি ভালোবাসি।",
-            socials: [
-                { id: 1, name: "Facebook", url: "https://facebook.com", icon: "fab fa-facebook" },
-                { id: 2, name: "GitHub", url: "https://github.com", icon: "fab fa-github" },
-                { id: 3, name: "LinkedIn", url: "https://linkedin.com", icon: "fab fa-linkedin" }
-            ],
-            projects: [
-                {
-                    id: 1,
-                    title: "ক্যাশ বুক ও অ্যাকাউন্টস অটোমেশন",
-                    desc: "একক ও ডাবল এন্ট্রি ক্যাশ বুক হিসেব তৈরির অটোমেটেড ওয়েব টুল।",
-                    link: "#",
-                    img: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=500&q=80"
-                },
-                {
-                    id: 2,
-                    title: "আইডি কার্ড ক্রপার টুল",
-                    desc: "আইডি কার্ডের ফ্রন্ট ও ব্যাক পেজ নিখুঁতভাবে ক্রপ করে পেজে প্রিন্ট করার অ্যাপ্লিকেশন।",
-                    link: "#",
-                    img: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&w=500&q=80"
-                }
-            ],
-            gallery: [
-                "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=500&q=80",
-                "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=500&q=80"
-            ],
-            contact: {
-                phone: "+৮৮০ ১৭০০ ০০০০০০",
-                email: "mahbub.alam@example.com",
-                address: "সাহেবগঞ্জ, বাকেরগঞ্জ, বরিশাল"
-            }
-        };
-
-        let appData = JSON.parse(localStorage.getItem('portfolio_data')) || DEFAULT_DATA;
-        let isAdmin = false;
-        let currentLang = 'bn';
-
         const i18n = {
             bn: {
                 nav_about: "আমার পরিচিতি",
@@ -474,7 +418,9 @@
                 nav_contact: "যোগাযোগ",
                 nav_login: "লগইন",
                 admin_active: "অ্যাডমিন সক্রিয়",
+                hero_status: "ওয়েব ডেভেলপমেন্ট ও অ্যাকাউন্টিং বিশেষজ্ঞ",
                 hero_welcome: "হ্যালো, আমি",
+                btn_edit_bio: "বায়ো ও টাইটেল পরিবর্তন করুন",
                 btn_contact: "যোগাযোগ করুন",
                 btn_print_cv: "সিভি প্রিন্ট করুন",
                 social_title: "সোশ্যাল মিডিয়া:",
@@ -482,11 +428,19 @@
                 skills_subheading: "আমার অ্যাকাউন্টিং এবং ওয়েব টেকনোলজির সমন্বয়",
                 skills_tech: "কারিগরি দক্ষতা",
                 exp_title: "অভিজ্ঞতা ও শিক্ষাগত যোগ্যতা",
+                exp_job1: "কমিউনিটি ম্যানেজার ও ব্র্যাঞ্চ অ্যাকাউন্ট্যান্ট",
+                exp_edu1: "এমবিএ ও বিবিএ (অ্যাকাউন্টিং)",
                 projects_title: "আমার প্রজেক্টসমূহ",
                 projects_subtitle: "আমার তৈরি কিছু উল্লেখযোগ্য ওয়েব টুলস ও অ্যাপ্লিকেশন",
                 gallery_title: "ছবি গ্যালারি",
                 gallery_subtitle: "ব্যক্তিগত এবং কাজের কিছু স্মরণীয় মুহূর্ত",
                 contact_title: "যোগাযোগ করুন",
+                contact_subtitle: "যেকোনো প্রশ্ন বা প্রজেক্ট আলোচনার জন্য আমাকে বার্তা পাঠান",
+                contact_phone: "ফোন / হোয়াটসঅ্যাপ:",
+                contact_email: "ইমেইল:",
+                contact_address: "ঠিকানা:",
+                btn_edit_contact: "তথ্য সংশোধন করুন",
+                btn_send_msg: "বার্তা পাঠান",
                 btn_add: "যোগ করুন",
                 btn_add_project: "নতুন প্রজেক্ট যোগ করুন",
                 btn_upload_photo: "ছবি আপলোড করুন"
@@ -499,7 +453,9 @@
                 nav_contact: "Contact",
                 nav_login: "Login",
                 admin_active: "Admin Active",
+                hero_status: "Web Development & Accounting Specialist",
                 hero_welcome: "Hello, I am",
+                btn_edit_bio: "Edit Bio & Title",
                 btn_contact: "Contact Me",
                 btn_print_cv: "Print CV",
                 social_title: "Social Media:",
@@ -507,44 +463,108 @@
                 skills_subheading: "A blend of my financial accounting & web engineering skills",
                 skills_tech: "Technical Skills",
                 exp_title: "Experience & Education",
+                exp_job1: "Community Manager & Branch Accountant",
+                exp_edu1: "MBA & BBA in Accounting",
                 projects_title: "My Projects",
                 projects_subtitle: "Selected web applications and interactive tools I built",
                 gallery_title: "Photo Gallery",
                 gallery_subtitle: "Memorable moments from my professional & personal life",
                 contact_title: "Contact Me",
+                contact_subtitle: "Feel free to reach out for any inquiries or project collaborations",
+                contact_phone: "Phone / WhatsApp:",
+                contact_email: "Email:",
+                contact_address: "Address:",
+                btn_edit_contact: "Edit Contact Details",
+                btn_send_msg: "Send Message",
                 btn_add: "Add",
                 btn_add_project: "Add New Project",
                 btn_upload_photo: "Upload Photo"
             }
         };
 
+        const DEFAULT_DATA = {
+            profileImg: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80",
+            status_bn: "ওয়েব ডেভেলপমেন্ট ও অ্যাকাউন্টিং বিশেষজ্ঞ",
+            status_en: "Web Development & Accounting Specialist",
+            bio_bn: "আমি একজন আগ্রহী ওয়েব ডেভেলপার এবং ফাইনান্সিয়াল ম্যানেজমেন্ট স্পেশালিস্ট। অ্যাকাউন্টস অটোমেশন, ডিজিটাল ফাইল প্রসেসিং অ্যাপস এবং ইন্টারঅ্যাক্টিভ ওয়েব সমাধান তৈরি করতে আমি ভালোবাসি।",
+            bio_en: "I am a passionate Web Developer and Financial Management Specialist. I specialize in building automated cash books, custom administrative web tools, and responsive single-page web applications.",
+            socials: [
+                { id: 1, name: "Facebook", url: "https://facebook.com", icon: "fab fa-facebook" },
+                { id: 2, name: "GitHub", url: "https://github.com", icon: "fab fa-github" },
+                { id: 3, name: "LinkedIn", url: "https://linkedin.com", icon: "fab fa-linkedin" }
+            ],
+            projects: [
+                {
+                    id: 1,
+                    title: "Cash Book & Accounts Automation",
+                    desc: "Automated web application for managing single and double-entry cash book ledgers.",
+                    link: "#",
+                    img: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=500&q=80"
+                },
+                {
+                    id: 2,
+                    title: "ID Card Cropper Tool",
+                    desc: "Web utility for precisely cropping ID cards front and back for standard printing.",
+                    link: "#",
+                    img: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&w=500&q=80"
+                }
+            ],
+            gallery: [
+                "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=500&q=80",
+                "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=500&q=80"
+            ],
+            contact: {
+                phone: "+880 1700 000000",
+                email: "mahbub.alam@example.com",
+                address: "Sahebganj, Bakerganj, Barishal"
+            }
+        };
+
+        let appData = JSON.parse(localStorage.getItem('portfolio_data_v3')) || DEFAULT_DATA;
+        let isAdmin = false;
+        let currentLang = 'en'; // Default set to English
+
         document.addEventListener("DOMContentLoaded", () => {
             renderAll();
         });
 
         function saveData() {
-            localStorage.setItem('portfolio_data', JSON.stringify(appData));
+            localStorage.setItem('portfolio_data_v3', JSON.stringify(appData));
+            renderAll();
+        }
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'bn' : 'en';
+            document.getElementById('lang-btn-text').innerText = currentLang === 'en' ? 'বাংলা' : 'English';
             renderAll();
         }
 
         function renderAll() {
+            // Update Dynamic Texts based on Language
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18n[currentLang][key]) {
+                    el.innerText = i18n[currentLang][key];
+                }
+            });
+
             if (appData.profileImg) document.getElementById('hero-img').src = appData.profileImg;
-            if (appData.status) document.getElementById('hero-status').innerText = appData.status;
-            if (appData.bio) document.getElementById('hero-bio').innerText = appData.bio;
+            document.getElementById('hero-status').innerText = currentLang === 'bn' ? (appData.status_bn || appData.status_en) : (appData.status_en || appData.status_bn);
+            document.getElementById('hero-bio').innerText = currentLang === 'bn' ? (appData.bio_bn || appData.bio_en) : (appData.bio_en || appData.bio_bn);
 
             renderSocials();
             renderProjects();
             renderGallery();
             renderContact();
-            updateLanguageUI();
+            updateAdminUI();
         }
 
         // Admin Auth
         function handleAdminAuth() {
             if (isAdmin) {
                 isAdmin = false;
-                showToast("অ্যাডমিন মোড থেকে লগআউট করা হয়েছে");
-                updateAdminVisibility();
+                showToast("Admin mode logged out");
+                renderAll();
             } else {
                 openModal('modal-admin');
             }
@@ -555,25 +575,23 @@
             if (pass === 'admin123') {
                 isAdmin = true;
                 closeModal('modal-admin');
-                showToast("অ্যাডমিন হিসেবে সফলভাবে লগইন করেছেন!");
-                updateAdminVisibility();
+                showToast("Admin Mode Activated!");
+                renderAll();
             } else {
-                alert("ভুল পাসওয়ার্ড! সঠিক পাসওয়ার্ড দিন (Default: admin123)");
+                alert("Incorrect password! Use default: admin123");
             }
         }
 
-        function updateAdminVisibility() {
+        function updateAdminUI() {
             document.querySelectorAll('.admin-only').forEach(el => {
                 if (isAdmin) el.classList.remove('hidden');
                 else el.classList.add('hidden');
             });
             document.getElementById('admin-badge').classList.toggle('hidden', !isAdmin);
-            document.getElementById('admin-btn-text').innerText = isAdmin ? 'লগআউট' : 'লগইন';
-            renderAll();
+            document.getElementById('admin-btn-text').innerText = isAdmin ? (currentLang === 'bn' ? 'লগআউট' : 'Logout') : (currentLang === 'bn' ? 'লগইন' : 'Login');
         }
 
-        // Profile Image Change
-        function openProfileImageModal() { openModal('modal-profile-img'); }
+        // Profile Image Save
         function saveProfileImage() {
             const url = document.getElementById('profile-img-url').value;
             const fileInput = document.getElementById('profile-img-file');
@@ -584,45 +602,52 @@
                     appData.profileImg = e.target.result;
                     saveData();
                     closeModal('modal-profile-img');
-                    showToast("প্রোফাইল ছবি পরিবর্তন হয়েছে!");
+                    showToast("Profile image updated!");
                 };
                 reader.readAsDataURL(fileInput.files[0]);
             } else if (url) {
                 appData.profileImg = url;
                 saveData();
                 closeModal('modal-profile-img');
-                showToast("প্রোফাইল ছবি পরিবর্তন হয়েছে!");
+                showToast("Profile image updated!");
             }
         }
 
-        // Bio Change
-        function openBioEditModal() {
-            document.getElementById('bio-status-input').value = appData.status || '';
-            document.getElementById('bio-text-input').value = appData.bio || '';
+        // Bio Save
+        function openBioModal() {
+            document.getElementById('bio-status-input').value = currentLang === 'bn' ? (appData.status_bn || '') : (appData.status_en || '');
+            document.getElementById('bio-text-input').value = currentLang === 'bn' ? (appData.bio_bn || '') : (appData.bio_en || '');
             openModal('modal-bio');
         }
+
         function saveBio() {
-            appData.status = document.getElementById('bio-status-input').value;
-            appData.bio = document.getElementById('bio-text-input').value;
+            if (currentLang === 'bn') {
+                appData.status_bn = document.getElementById('bio-status-input').value;
+                appData.bio_bn = document.getElementById('bio-text-input').value;
+            } else {
+                appData.status_en = document.getElementById('bio-status-input').value;
+                appData.bio_en = document.getElementById('bio-text-input').value;
+            }
             saveData();
             closeModal('modal-bio');
-            showToast("বায়ো ও পজিশন সেভ হয়েছে!");
+            showToast("Bio updated successfully!");
         }
 
-        // Contact Info Edit
-        function openContactEditModal() {
-            document.getElementById('edit-contact-phone').value = appData.contact.phone || '';
-            document.getElementById('edit-contact-email').value = appData.contact.email || '';
-            document.getElementById('edit-contact-address').value = appData.contact.address || '';
-            openModal('modal-contact-edit');
+        // Contact Save
+        function openContactModal() {
+            document.getElementById('edit-phone').value = appData.contact.phone || '';
+            document.getElementById('edit-email').value = appData.contact.email || '';
+            document.getElementById('edit-address').value = appData.contact.address || '';
+            openModal('modal-contact');
         }
-        function saveContactDetails() {
-            appData.contact.phone = document.getElementById('edit-contact-phone').value;
-            appData.contact.email = document.getElementById('edit-contact-email').value;
-            appData.contact.address = document.getElementById('edit-contact-address').value;
+
+        function saveContact() {
+            appData.contact.phone = document.getElementById('edit-phone').value;
+            appData.contact.email = document.getElementById('edit-email').value;
+            appData.contact.address = document.getElementById('edit-address').value;
             saveData();
-            closeModal('modal-contact-edit');
-            showToast("যোগাযোগের তথ্য আপডেট হয়েছে!");
+            closeModal('modal-contact');
+            showToast("Contact details saved!");
         }
 
         // Render Functions
@@ -647,8 +672,8 @@
                         <h3 class="font-bold text-base text-slate-800 dark:text-slate-100">${p.title}</h3>
                         <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">${p.desc}</p>
                         <div class="flex justify-between items-center pt-2">
-                            <a href="${p.link}" target="_blank" class="text-xs font-semibold text-sky-500 hover:underline">ভিউ প্রজেক্ট <i class="fas fa-arrow-right text-[10px] ml-1"></i></a>
-                            ${isAdmin ? `<button onclick="deleteProject(${p.id})" class="text-xs text-rose-500 hover:text-rose-600 font-semibold"><i class="fas fa-trash mr-1"></i>ডিলিট</button>` : ''}
+                            <a href="${p.link}" target="_blank" class="text-xs font-semibold text-sky-500 hover:underline">View Project <i class="fas fa-arrow-right text-[10px] ml-1"></i></a>
+                            ${isAdmin ? `<button onclick="deleteProject(${p.id})" class="text-xs text-rose-500 hover:text-rose-600 font-semibold"><i class="fas fa-trash mr-1"></i>Delete</button>` : ''}
                         </div>
                     </div>
                 </div>
@@ -675,8 +700,7 @@
             document.getElementById('contact-address').innerText = appData.contact.address;
         }
 
-        // Add / Delete Actions
-        function openSocialModal() { openModal('modal-social'); }
+        // Action Handlers
         function saveSocial() {
             const name = document.getElementById('social-name').value;
             const url = document.getElementById('social-url').value;
@@ -685,16 +709,16 @@
                 appData.socials.push({ id: Date.now(), name, url, icon });
                 saveData();
                 closeModal('modal-social');
-                showToast("নতুন সোশ্যাল লিংক যোগ হয়েছে!");
+                showToast("Social link added!");
             }
         }
+
         function deleteSocial(id) {
             appData.socials = appData.socials.filter(s => s.id !== id);
             saveData();
-            showToast("সোশ্যাল লিংক ডিলিট করা হয়েছে");
+            showToast("Social link deleted");
         }
 
-        function openProjectModal() { openModal('modal-project'); }
         function saveProject() {
             const title = document.getElementById('proj-title').value;
             const desc = document.getElementById('proj-desc').value;
@@ -708,7 +732,7 @@
                     appData.projects.push({ id: Date.now(), title, desc, link, img: e.target.result });
                     saveData();
                     closeModal('modal-project');
-                    showToast("প্রজেক্ট সফলভাবে যোগ করা হয়েছে!");
+                    showToast("Project added!");
                 };
                 reader.readAsDataURL(fileInput.files[0]);
             } else {
@@ -716,7 +740,7 @@
                     appData.projects.push({ id: Date.now(), title, desc, link, img });
                     saveData();
                     closeModal('modal-project');
-                    showToast("প্রজেক্ট সফলভাবে যোগ করা হয়েছে!");
+                    showToast("Project added!");
                 }
             }
         }
@@ -724,10 +748,9 @@
         function deleteProject(id) {
             appData.projects = appData.projects.filter(p => p.id !== id);
             saveData();
-            showToast("প্রজেক্ট ডিলিট করা হয়েছে");
+            showToast("Project deleted");
         }
 
-        function openGalleryUploadModal() { openModal('modal-gallery'); }
         function saveGalleryImage() {
             const url = document.getElementById('gal-url').value;
             const fileInput = document.getElementById('gal-file');
@@ -738,44 +761,25 @@
                     appData.gallery.push(e.target.result);
                     saveData();
                     closeModal('modal-gallery');
-                    showToast("ছবি গ্যালারিতে যোগ হয়েছে!");
+                    showToast("Gallery image uploaded!");
                 };
                 reader.readAsDataURL(fileInput.files[0]);
             } else if (url) {
                 appData.gallery.push(url);
                 saveData();
                 closeModal('modal-gallery');
-                showToast("ছবি গ্যালারিতে যোগ হয়েছে!");
+                showToast("Gallery image uploaded!");
             }
         }
 
         function deleteGalleryImage(index) {
             appData.gallery.splice(index, 1);
             saveData();
-            showToast("ছবি মুছে ফেলা হয়েছে");
+            showToast("Photo removed");
         }
 
-        // Language & Theme Toggle
-        function toggleLanguage() {
-            currentLang = currentLang === 'bn' ? 'en' : 'bn';
-            document.getElementById('lang-text').innerText = currentLang === 'bn' ? 'EN' : 'বাংলা';
-            updateLanguageUI();
-        }
-
-        function updateLanguageUI() {
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (i18n[currentLang][key]) {
-                    el.innerText = i18n[currentLang][key];
-                }
-            });
-        }
-
-        function toggleTheme() {
-            document.documentElement.classList.toggle('dark');
-        }
-
-        // Helper UI Functions
+        // Helpers
+        function toggleTheme() { document.documentElement.classList.toggle('dark'); }
         function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
         function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
 
@@ -783,14 +787,12 @@
             const toast = document.getElementById('toast');
             document.getElementById('toast-msg').innerText = message;
             toast.classList.remove('translate-y-20', 'opacity-0');
-            setTimeout(() => {
-                toast.classList.add('translate-y-20', 'opacity-0');
-            }, 3000);
+            setTimeout(() => { toast.classList.add('translate-y-20', 'opacity-0'); }, 3000);
         }
 
         function handleContactSubmit(e) {
             e.preventDefault();
-            showToast("আপনার বার্তা সফলভাবে পাঠানো হয়েছে!");
+            showToast(currentLang === 'bn' ? "আপনার বার্তা পাঠানো হয়েছে!" : "Your message has been sent!");
             e.target.reset();
         }
     </script>
