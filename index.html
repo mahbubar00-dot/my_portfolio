@@ -86,10 +86,14 @@
             </div>
 
             <div class="flex items-center space-x-2">
-                <!-- Backup Export Data -->
-                <button onclick="exportJSONData()" class="admin-only hidden p-2 rounded-lg bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors text-xs font-bold" title="Backup All Site Data">
-                    <i class="fas fa-download text-emerald-500"></i>
+                <!-- Admin Sync & Refresh Controls -->
+                <button onclick="exportJSONData()" class="admin-only hidden p-2 rounded-lg bg-emerald-500/10 text-emerald-600 hover:bg-emerald-500/20 transition-colors text-xs font-bold px-3 flex items-center space-x-1" title="Download Backup JSON">
+                    <i class="fas fa-download"></i> <span class="hidden sm:inline">Export</span>
                 </button>
+                <label class="admin-only hidden p-2 rounded-lg bg-sky-500/10 text-sky-600 hover:bg-sky-500/20 transition-colors text-xs font-bold px-3 flex items-center space-x-1 cursor-pointer" title="Restore/Sync Data">
+                    <i class="fas fa-sync-alt"></i> <span class="hidden sm:inline">Sync / Import</span>
+                    <input type="file" id="import-file" accept=".json" onchange="importJSONData(event)" class="hidden">
+                </label>
 
                 <!-- Language Toggle Button -->
                 <button onclick="toggleLanguage()" class="p-2 rounded-lg bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors text-xs font-bold px-3 flex items-center space-x-1">
@@ -197,7 +201,6 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Skills Card -->
                 <div class="glass-card p-6 rounded-2xl border border-slate-100 dark:border-slate-800 space-y-4">
                     <h3 class="text-lg font-bold flex items-center space-x-2 border-b border-slate-200 dark:border-slate-800 pb-3">
                         <i class="fas fa-code text-sky-500"></i>
@@ -210,7 +213,7 @@
                                 <span>90%</span>
                             </div>
                             <div class="w-full bg-slate-200 dark:bg-slate-700 h-2 rounded-full overflow-hidden">
-                                <div class="bg-sky-500 h-full rounded-full w-[90%] transition-all duration-1000"></div>
+                                <div class="bg-sky-500 h-full rounded-full w-[90%]"></div>
                             </div>
                         </div>
                         <div>
@@ -219,22 +222,12 @@
                                 <span>95%</span>
                             </div>
                             <div class="w-full bg-slate-200 dark:bg-slate-700 h-2 rounded-full overflow-hidden">
-                                <div class="bg-indigo-500 h-full rounded-full w-[95%] transition-all duration-1000"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between text-xs font-semibold mb-1">
-                                <span>GitHub Pages & Firebase Deployment</span>
-                                <span>85%</span>
-                            </div>
-                            <div class="w-full bg-slate-200 dark:bg-slate-700 h-2 rounded-full overflow-hidden">
-                                <div class="bg-emerald-500 h-full rounded-full w-[85%] transition-all duration-1000"></div>
+                                <div class="bg-indigo-500 h-full rounded-full w-[95%]"></div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Education & Experience Timeline -->
                 <div class="glass-card p-6 rounded-2xl border border-slate-100 dark:border-slate-800 space-y-4">
                     <h3 class="text-lg font-bold flex items-center space-x-2 border-b border-slate-200 dark:border-slate-800 pb-3">
                         <i class="fas fa-briefcase text-sky-500"></i>
@@ -619,11 +612,10 @@
             }
         };
 
-        let appData = JSON.parse(localStorage.getItem('portfolio_data_v4')) || DEFAULT_DATA;
+        let appData = JSON.parse(localStorage.getItem('portfolio_data_v5')) || DEFAULT_DATA;
         let isAdmin = false;
         let currentLang = 'en';
 
-        // Hero Typing Effect Titles
         const typingTitles = [
             "Web Development Specialist",
             "Financial Accounts Automator",
@@ -648,7 +640,7 @@
         });
 
         function saveData() {
-            localStorage.setItem('portfolio_data_v4', JSON.stringify(appData));
+            localStorage.setItem('portfolio_data_v5', JSON.stringify(appData));
             renderAll();
         }
 
@@ -679,6 +671,7 @@
 
         function startTypingEffect() {
             const target = document.getElementById('hero-status-typing');
+            if(!target) return;
             const currentTitle = typingTitles[typingIndex];
 
             if (isDeleting) {
@@ -701,14 +694,31 @@
             }
         }
 
-        // Export Data JSON
+        // Export Data JSON for permanent backup/sync across devices
         function exportJSONData() {
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appData, null, 2));
             const dlAnchorElem = document.createElement('a');
             dlAnchorElem.setAttribute("href", dataStr);
-            dlAnchorElem.setAttribute("download", "my_portfolio_backup.json");
+            dlAnchorElem.setAttribute("download", "portfolio_backup.json");
             dlAnchorElem.click();
-            showToast("Site data backup downloaded!");
+            showToast("Backup JSON exported successfully!");
+        }
+
+        // Import/Sync Data JSON on any device/browser
+        function importJSONData(event) {
+            const fileReader = new FileReader();
+            if (event.target.files[0]) {
+                fileReader.readAsText(event.target.files[0], "UTF-8");
+                fileReader.onload = function(e) {
+                    try {
+                        appData = JSON.parse(e.target.result);
+                        saveData();
+                        showToast("Data synced & updated successfully!");
+                    } catch (error) {
+                        alert("Invalid JSON backup file!");
+                    }
+                };
+            }
         }
 
         // Admin Auth
