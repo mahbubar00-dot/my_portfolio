@@ -72,7 +72,7 @@
                     Md. Mahbub Alam
                 </span>
                 <span id="admin-badge" class="hidden px-2 py-0.5 text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 rounded-full">
-                    <i class="fas fa-user-shield mr-1"></i><span data-i18n="admin_active">Admin Mode</span>
+                    <i class="fas fa-user-shield mr-1"></i><span data-i18n="admin_active">Cloud Admin Active</span>
                 </span>
             </div>
 
@@ -86,15 +86,6 @@
             </div>
 
             <div class="flex items-center space-x-2">
-                <!-- Admin Sync & Refresh Controls -->
-                <button onclick="exportJSONData()" class="admin-only hidden p-2 rounded-lg bg-emerald-500/10 text-emerald-600 hover:bg-emerald-500/20 transition-colors text-xs font-bold px-3 flex items-center space-x-1" title="Download Backup JSON">
-                    <i class="fas fa-download"></i> <span class="hidden sm:inline">Export</span>
-                </button>
-                <label class="admin-only hidden p-2 rounded-lg bg-sky-500/10 text-sky-600 hover:bg-sky-500/20 transition-colors text-xs font-bold px-3 flex items-center space-x-1 cursor-pointer" title="Restore/Sync Data">
-                    <i class="fas fa-sync-alt"></i> <span class="hidden sm:inline">Sync / Import</span>
-                    <input type="file" id="import-file" accept=".json" onchange="importJSONData(event)" class="hidden">
-                </label>
-
                 <!-- Language Toggle Button -->
                 <button onclick="toggleLanguage()" class="p-2 rounded-lg bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors text-xs font-bold px-3 flex items-center space-x-1">
                     <i class="fas fa-globe text-sky-500"></i>
@@ -477,94 +468,25 @@
         </div>
     </div>
 
-    <!-- JavaScript Translation & Logic -->
-    <script>
-        const i18n = {
-            bn: {
-                nav_about: "আমার পরিচিতি",
-                nav_skills: "দক্ষতা",
-                nav_projects: "প্রজেক্টসমূহ",
-                nav_reviews: "রিভিউ",
-                nav_gallery: "গ্যালারি",
-                nav_contact: "যোগাযোগ",
-                nav_login: "লগইন",
-                admin_active: "অ্যাডমিন সক্রিয়",
-                hero_welcome: "হ্যালো, আমি",
-                btn_edit_bio: "বায়ো ও টাইটেল পরিবর্তন করুন",
-                btn_contact: "যোগাযোগ করুন",
-                btn_print_cv: "সিভি প্রিন্ট করুন",
-                social_title: "সোশ্যাল মিডিয়া:",
-                stat_exp: "বছরের অভিজ্ঞতা",
-                stat_projects: "ওয়েব অ্যাপ্স নির্মিত",
-                stat_quality: "ক্লায়েন্ট সন্তুষ্টি",
-                stat_degree: "অ্যাকাউন্টিং গ্রাজুয়েট",
-                skills_heading: "দক্ষতা ও কাজের ইতিহাস",
-                skills_subheading: "আমার অ্যাকাউন্টিং এবং ওয়েব টেকনোলজির সমন্বয়",
-                skills_tech: "কারিগরি দক্ষতা",
-                exp_title: "অভিজ্ঞতা ও শিক্ষাগত যোগ্যতা",
-                exp_job1: "কমিউনিটি ম্যানেজার ও ব্র্যাঞ্চ অ্যাকাউন্ট্যান্ট",
-                exp_edu1: "এমবিএ ও বিবিএ (অ্যাকাউন্টিং)",
-                projects_title: "আমার প্রজেক্টসমূহ",
-                projects_subtitle: "আমার তৈরি কিছু উল্লেখযোগ্য ওয়েব টুলস ও অ্যাপ্লিকেশন",
-                review_title: "সুপারিশ ও ক্লায়েন্ট রিভিউ",
-                review_subtitle: "আমার কাজের মূল্যায়ন এবং সহকর্মীদের মন্তব্য",
-                gallery_title: "ছবি গ্যালারি",
-                gallery_subtitle: "ব্যক্তিগত এবং কাজের কিছু স্মরণীয় মুহূর্ত",
-                contact_title: "যোগাযোগ করুন",
-                contact_subtitle: "যেকোনো প্রশ্ন বা প্রজেক্ট আলোচনার জন্য আমাকে বার্তা পাঠান",
-                contact_phone: "ফোন / হোয়াটসঅ্যাপ:",
-                contact_email: "ইমেইল:",
-                contact_address: "ঠিকানা:",
-                btn_edit_contact: "তথ্য সংশোধন করুন",
-                btn_send_msg: "বার্তা পাঠান",
-                btn_add: "যোগ করুন",
-                btn_add_project: "নতুন প্রজেক্ট যোগ করুন",
-                btn_add_review: "রিভিউ যোগ করুন",
-                btn_upload_photo: "ছবি আপলোড করুন"
-            },
-            en: {
-                nav_about: "About Me",
-                nav_skills: "Skills",
-                nav_projects: "Projects",
-                nav_reviews: "Reviews",
-                nav_gallery: "Gallery",
-                nav_contact: "Contact",
-                nav_login: "Login",
-                admin_active: "Admin Active",
-                hero_welcome: "Hello, I am",
-                btn_edit_bio: "Edit Bio & Title",
-                btn_contact: "Contact Me",
-                btn_print_cv: "Print CV",
-                social_title: "Social Media:",
-                stat_exp: "Years Experience",
-                stat_projects: "Web Apps Built",
-                stat_quality: "Client Satisfaction",
-                stat_degree: "Accounting Graduate",
-                skills_heading: "Skills & Experience History",
-                skills_subheading: "A blend of my financial accounting & web engineering skills",
-                skills_tech: "Technical Skills",
-                exp_title: "Experience & Education",
-                exp_job1: "Community Manager & Branch Accountant",
-                exp_edu1: "MBA & BBA in Accounting",
-                projects_title: "My Projects",
-                projects_subtitle: "Selected web applications and interactive tools I built",
-                review_title: "Recommendations & Reviews",
-                review_subtitle: "Feedback from colleagues and project collaborators",
-                gallery_title: "Photo Gallery",
-                gallery_subtitle: "Memorable moments from my professional & personal life",
-                contact_title: "Contact Me",
-                contact_subtitle: "Feel free to reach out for any inquiries or project collaborations",
-                contact_phone: "Phone / WhatsApp:",
-                contact_email: "Email:",
-                contact_address: "Address:",
-                btn_edit_contact: "Edit Contact Details",
-                btn_send_msg: "Send Message",
-                btn_add: "Add",
-                btn_add_project: "Add New Project",
-                btn_add_review: "Add Review",
-                btn_upload_photo: "Upload Photo"
-            }
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDUFNpaTXGaMGV2U4iC2c-tgUoQxAuuxLg",
+            authDomain: "my-portfolio-c39df.firebaseapp.com",
+            databaseURL: "https://my-portfolio-c39df-default-rtdb.firebaseio.com",
+            projectId: "my-portfolio-c39df",
+            storageBucket: "my-portfolio-c39df.firebasestorage.app",
+            messagingSenderId: "1056947440567",
+            appId: "1:1056947440567:web:fb1bb47d05c2ae09eaf632",
+            measurementId: "G-L3107NXP0P"
         };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
 
         const DEFAULT_DATA = {
             profileImg: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80",
@@ -612,9 +534,118 @@
             }
         };
 
-        let appData = JSON.parse(localStorage.getItem('portfolio_data_v5')) || DEFAULT_DATA;
-        let isAdmin = false;
-        let currentLang = 'en';
+        window.appData = DEFAULT_DATA;
+        window.isAdmin = false;
+        window.currentLang = 'en';
+
+        // Listen for Realtime Database changes (Cloud Sync for all visitors)
+        const dbRef = ref(db, 'portfolioData');
+        onValue(dbRef, (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                window.appData = data;
+            } else {
+                // Initialize if empty
+                set(dbRef, DEFAULT_DATA);
+            }
+            renderAll();
+        });
+
+        window.saveDataToFirebase = function() {
+            set(dbRef, window.appData).then(() => {
+                showToast("Synced to Cloud Database successfully!");
+                renderAll();
+            }).catch((error) => {
+                alert("Failed to sync: " + error.message);
+            });
+        };
+
+        const i18n = {
+            bn: {
+                nav_about: "আমার পরিচিতি",
+                nav_skills: "দক্ষতা",
+                nav_projects: "প্রজেক্টসমূহ",
+                nav_reviews: "রিভিউ",
+                nav_gallery: "গ্যালারি",
+                nav_contact: "যোগাযোগ",
+                nav_login: "লগইন",
+                admin_active: "ক্লাউড অ্যাডমিন সক্রিয়",
+                hero_welcome: "হ্যালো, আমি",
+                btn_edit_bio: "বায়ো ও টাইটেল পরিবর্তন করুন",
+                btn_contact: "যোগাযোগ করুন",
+                btn_print_cv: "সিভি প্রিন্ট করুন",
+                social_title: "সোশ্যাল মিডিয়া:",
+                stat_exp: "বছরের অভিজ্ঞতা",
+                stat_projects: "ওয়েব অ্যাপ্স নির্মিত",
+                stat_quality: "ক্লায়েন্ট সন্তুষ্টি",
+                stat_degree: "অ্যাকাউন্টিং গ্রাজুয়েট",
+                skills_heading: "দক্ষতা ও কাজের ইতিহাস",
+                skills_subheading: "আমার অ্যাকাউন্টিং এবং ওয়েব টেকনোলজির সমন্বয়",
+                skills_tech: "কারিগরি দক্ষতা",
+                exp_title: "অভিজ্ঞতা ও শিক্ষাগত যোগ্যতা",
+                exp_job1: "কমিউনিটি ম্যানেজার ও ব্র্যাঞ্চ অ্যাকাউন্ট্যান্ট",
+                exp_edu1: "এমবিএ ও বিবিএ (অ্যাকাউন্টিং)",
+                projects_title: "আমার প্রজেক্টসমূহ",
+                projects_subtitle: "আমার তৈরি কিছু উল্লেখযোগ্য ওয়েব টুলস ও অ্যাপ্লিকেশন",
+                review_title: "সুপারিশ ও ক্লায়েন্ট রিভিউ",
+                review_subtitle: "আমার কাজের মূল্যায়ন এবং সহকর্মীদের মন্তব্য",
+                gallery_title: "ছবি গ্যালারি",
+                gallery_subtitle: "ব্যক্তিগত এবং কাজের কিছু স্মরণীয় মুহূর্ত",
+                contact_title: "যোগাযোগ করুন",
+                contact_subtitle: "যেকোনো প্রশ্ন বা প্রজেক্ট আলোচনার জন্য আমাকে বার্তা পাঠান",
+                contact_phone: "ফোন / হোয়াটসঅ্যাপ:",
+                contact_email: "ইমেইল:",
+                contact_address: "ঠিকানা:",
+                btn_edit_contact: "তথ্য সংশোধন করুন",
+                btn_send_msg: "বার্তা পাঠান",
+                btn_add: "যোগ করুন",
+                btn_add_project: "নতুন প্রজেক্ট যোগ করুন",
+                btn_add_review: "রিভিউ যোগ করুন",
+                btn_upload_photo: "ছবি আপলোড করুন"
+            },
+            en: {
+                nav_about: "About Me",
+                nav_skills: "Skills",
+                nav_projects: "Projects",
+                nav_reviews: "Reviews",
+                nav_gallery: "Gallery",
+                nav_contact: "Contact",
+                nav_login: "Login",
+                admin_active: "Cloud Admin Active",
+                hero_welcome: "Hello, I am",
+                btn_edit_bio: "Edit Bio & Title",
+                btn_contact: "Contact Me",
+                btn_print_cv: "Print CV",
+                social_title: "Social Media:",
+                stat_exp: "Years Experience",
+                stat_projects: "Web Apps Built",
+                stat_quality: "Client Satisfaction",
+                stat_degree: "Accounting Graduate",
+                skills_heading: "Skills & Experience History",
+                skills_subheading: "A blend of my financial accounting & web engineering skills",
+                skills_tech: "Technical Skills",
+                exp_title: "Experience & Education",
+                exp_job1: "Community Manager & Branch Accountant",
+                exp_edu1: "MBA & BBA in Accounting",
+                projects_title: "My Projects",
+                projects_subtitle: "Selected web applications and interactive tools I built",
+                review_title: "Recommendations & Reviews",
+                review_subtitle: "Feedback from colleagues and project collaborators",
+                gallery_title: "Photo Gallery",
+                gallery_subtitle: "Memorable moments from my professional & personal life",
+                contact_title: "Contact Me",
+                contact_subtitle: "Feel free to reach out for any inquiries or project collaborations",
+                contact_phone: "Phone / WhatsApp:",
+                contact_email: "Email:",
+                contact_address: "Address:",
+                btn_edit_contact: "Edit Contact Details",
+                btn_send_msg: "Send Message",
+                btn_add: "Add",
+                btn_add_project: "Add New Project",
+                btn_add_review: "Add Review",
+                btn_upload_photo: "Upload Photo"
+            }
+        };
 
         const typingTitles = [
             "Web Development Specialist",
@@ -626,9 +657,7 @@
         let isDeleting = false;
 
         document.addEventListener("DOMContentLoaded", () => {
-            renderAll();
             startTypingEffect();
-
             window.addEventListener('scroll', () => {
                 const btn = document.getElementById('backToTop');
                 if (window.scrollY > 300) {
@@ -639,27 +668,16 @@
             });
         });
 
-        function saveData() {
-            localStorage.setItem('portfolio_data_v5', JSON.stringify(appData));
-            renderAll();
-        }
-
-        function toggleLanguage() {
-            currentLang = currentLang === 'en' ? 'bn' : 'en';
-            document.getElementById('lang-btn-text').innerText = currentLang === 'en' ? 'বাংলা' : 'English';
-            renderAll();
-        }
-
-        function renderAll() {
+        window.renderAll = function() {
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
-                if (i18n[currentLang][key]) {
-                    el.innerText = i18n[currentLang][key];
+                if (i18n[window.currentLang][key]) {
+                    el.innerText = i18n[window.currentLang][key];
                 }
             });
 
-            if (appData.profileImg) document.getElementById('hero-img').src = appData.profileImg;
-            document.getElementById('hero-bio').innerText = currentLang === 'bn' ? (appData.bio_bn || appData.bio_en) : (appData.bio_en || appData.bio_bn);
+            if (window.appData.profileImg) document.getElementById('hero-img').src = window.appData.profileImg;
+            document.getElementById('hero-bio').innerText = window.currentLang === 'bn' ? (window.appData.bio_bn || window.appData.bio_en) : (window.appData.bio_en || window.appData.bio_bn);
 
             renderSocials();
             renderProjects();
@@ -694,37 +712,15 @@
             }
         }
 
-        // Export Data JSON for permanent backup/sync across devices
-        function exportJSONData() {
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appData, null, 2));
-            const dlAnchorElem = document.createElement('a');
-            dlAnchorElem.setAttribute("href", dataStr);
-            dlAnchorElem.setAttribute("download", "portfolio_backup.json");
-            dlAnchorElem.click();
-            showToast("Backup JSON exported successfully!");
+        window.toggleLanguage = function() {
+            window.currentLang = window.currentLang === 'en' ? 'bn' : 'en';
+            document.getElementById('lang-btn-text').innerText = window.currentLang === 'en' ? 'বাংলা' : 'English';
+            renderAll();
         }
 
-        // Import/Sync Data JSON on any device/browser
-        function importJSONData(event) {
-            const fileReader = new FileReader();
-            if (event.target.files[0]) {
-                fileReader.readAsText(event.target.files[0], "UTF-8");
-                fileReader.onload = function(e) {
-                    try {
-                        appData = JSON.parse(e.target.result);
-                        saveData();
-                        showToast("Data synced & updated successfully!");
-                    } catch (error) {
-                        alert("Invalid JSON backup file!");
-                    }
-                };
-            }
-        }
-
-        // Admin Auth
-        function handleAdminAuth() {
-            if (isAdmin) {
-                isAdmin = false;
+        window.handleAdminAuth = function() {
+            if (window.isAdmin) {
+                window.isAdmin = false;
                 showToast("Admin mode logged out");
                 renderAll();
             } else {
@@ -732,12 +728,12 @@
             }
         }
 
-        function submitAdminPass() {
+        window.submitAdminPass = function() {
             const pass = document.getElementById('admin-pass-input').value;
             if (pass === 'admin123') {
-                isAdmin = true;
+                window.isAdmin = true;
                 closeModal('modal-admin');
-                showToast("Admin Mode Activated!");
+                showToast("Cloud Admin Mode Activated!");
                 renderAll();
             } else {
                 alert("Incorrect password! Use default: admin123");
@@ -746,88 +742,80 @@
 
         function updateAdminUI() {
             document.querySelectorAll('.admin-only').forEach(el => {
-                if (isAdmin) el.classList.remove('hidden');
+                if (window.isAdmin) el.classList.remove('hidden');
                 else el.classList.add('hidden');
             });
-            document.getElementById('admin-badge').classList.toggle('hidden', !isAdmin);
-            document.getElementById('admin-btn-text').innerText = isAdmin ? (currentLang === 'bn' ? 'লগআউট' : 'Logout') : (currentLang === 'bn' ? 'লগইন' : 'Login');
+            document.getElementById('admin-badge').classList.toggle('hidden', !window.isAdmin);
+            document.getElementById('admin-btn-text').innerText = window.isAdmin ? (window.currentLang === 'bn' ? 'লগআউট' : 'Logout') : (window.currentLang === 'bn' ? 'লগইন' : 'Login');
         }
 
-        // Bio Save
-        function openBioModal() {
-            document.getElementById('bio-status-input').value = currentLang === 'bn' ? (appData.status_bn || '') : (appData.status_en || '');
-            document.getElementById('bio-text-input').value = currentLang === 'bn' ? (appData.bio_bn || '') : (appData.bio_en || '');
+        window.openBioModal = function() {
+            document.getElementById('bio-status-input').value = window.currentLang === 'bn' ? (window.appData.status_bn || '') : (window.appData.status_en || '');
+            document.getElementById('bio-text-input').value = window.currentLang === 'bn' ? (window.appData.bio_bn || '') : (window.appData.bio_en || '');
             openModal('modal-bio');
         }
 
-        function saveBio() {
-            if (currentLang === 'bn') {
-                appData.status_bn = document.getElementById('bio-status-input').value;
-                appData.bio_bn = document.getElementById('bio-text-input').value;
+        window.saveBio = function() {
+            if (window.currentLang === 'bn') {
+                window.appData.status_bn = document.getElementById('bio-status-input').value;
+                window.appData.bio_bn = document.getElementById('bio-text-input').value;
             } else {
-                appData.status_en = document.getElementById('bio-status-input').value;
-                appData.bio_en = document.getElementById('bio-text-input').value;
+                window.appData.status_en = document.getElementById('bio-status-input').value;
+                window.appData.bio_en = document.getElementById('bio-text-input').value;
             }
-            saveData();
+            window.saveDataToFirebase();
             closeModal('modal-bio');
-            showToast("Bio updated successfully!");
         }
 
-        // Profile Image Save
-        function saveProfileImage() {
+        window.saveProfileImage = function() {
             const url = document.getElementById('profile-img-url').value;
             const fileInput = document.getElementById('profile-img-file');
 
             if (fileInput.files && fileInput.files[0]) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    appData.profileImg = e.target.result;
-                    saveData();
+                    window.appData.profileImg = e.target.result;
+                    window.saveDataToFirebase();
                     closeModal('modal-profile-img');
-                    showToast("Profile image updated!");
                 };
                 reader.readAsDataURL(fileInput.files[0]);
             } else if (url) {
-                appData.profileImg = url;
-                saveData();
+                window.appData.profileImg = url;
+                window.saveDataToFirebase();
                 closeModal('modal-profile-img');
-                showToast("Profile image updated!");
             }
         }
 
-        // Contact Save
-        function openContactModal() {
-            document.getElementById('edit-phone').value = appData.contact.phone || '';
-            document.getElementById('edit-email').value = appData.contact.email || '';
-            document.getElementById('edit-address').value = appData.contact.address || '';
+        window.openContactModal = function() {
+            document.getElementById('edit-phone').value = window.appData.contact.phone || '';
+            document.getElementById('edit-email').value = window.appData.contact.email || '';
+            document.getElementById('edit-address').value = window.appData.contact.address || '';
             openModal('modal-contact');
         }
 
-        function saveContact() {
-            appData.contact.phone = document.getElementById('edit-phone').value;
-            appData.contact.email = document.getElementById('edit-email').value;
-            appData.contact.address = document.getElementById('edit-address').value;
-            saveData();
+        window.saveContact = function() {
+            window.appData.contact.phone = document.getElementById('edit-phone').value;
+            window.appData.contact.email = document.getElementById('edit-email').value;
+            window.appData.contact.address = document.getElementById('edit-address').value;
+            window.saveDataToFirebase();
             closeModal('modal-contact');
-            showToast("Contact details saved!");
         }
 
-        // Render Functions
         function renderSocials() {
             const container = document.getElementById('social-container');
-            container.innerHTML = appData.socials.map(s => `
+            container.innerHTML = window.appData.socials.map(s => `
                 <div class="relative group">
                     <a href="${s.url}" target="_blank" class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-sky-500 hover:text-white transition-all text-xs">
                         <i class="${s.icon}"></i>
                     </a>
-                    ${isAdmin ? `<button onclick="deleteSocial(${s.id})" class="absolute -top-1 -right-1 bg-rose-500 text-white rounded-full w-4 h-4 text-[9px] flex items-center justify-center shadow"><i class="fas fa-times"></i></button>` : ''}
+                    ${window.isAdmin ? `<button onclick="deleteSocial(${s.id})" class="absolute -top-1 -right-1 bg-rose-500 text-white rounded-full w-4 h-4 text-[9px] flex items-center justify-center shadow"><i class="fas fa-times"></i></button>` : ''}
                 </div>
             `).join('');
         }
 
         function renderProjects() {
             const grid = document.getElementById('projects-grid');
-            grid.innerHTML = appData.projects.map(p => `
+            grid.innerHTML = window.appData.projects.map(p => `
                 <div class="glass-card rounded-2xl overflow-hidden border border-slate-100 dark:border-slate-800 shadow-md group hover:shadow-xl transition-all">
                     <img src="${p.img}" alt="${p.title}" class="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300">
                     <div class="p-5 space-y-2">
@@ -835,7 +823,7 @@
                         <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">${p.desc}</p>
                         <div class="flex justify-between items-center pt-2">
                             <a href="${p.link}" target="_blank" class="text-xs font-semibold text-sky-500 hover:underline">View Project <i class="fas fa-arrow-right text-[10px] ml-1"></i></a>
-                            ${isAdmin ? `<button onclick="deleteProject(${p.id})" class="text-xs text-rose-500 hover:text-rose-600 font-semibold"><i class="fas fa-trash mr-1"></i>Delete</button>` : ''}
+                            ${window.isAdmin ? `<button onclick="deleteProject(${p.id})" class="text-xs text-rose-500 hover:text-rose-600 font-semibold"><i class="fas fa-trash mr-1"></i>Delete</button>` : ''}
                         </div>
                     </div>
                 </div>
@@ -844,8 +832,8 @@
 
         function renderReviews() {
             const grid = document.getElementById('reviews-grid');
-            if (!appData.reviews) appData.reviews = [];
-            grid.innerHTML = appData.reviews.map(r => `
+            if (!window.appData.reviews) window.appData.reviews = [];
+            grid.innerHTML = window.appData.reviews.map(r => `
                 <div class="glass-card p-6 rounded-2xl border border-slate-100 dark:border-slate-800 space-y-3 relative">
                     <div class="flex items-center space-x-3">
                         <div class="w-10 h-10 rounded-full bg-sky-500/10 text-sky-500 font-bold flex items-center justify-center text-sm">
@@ -857,17 +845,17 @@
                         </div>
                     </div>
                     <p class="text-xs text-slate-600 dark:text-slate-300 italic">"${r.text}"</p>
-                    ${isAdmin ? `<button onclick="deleteReview(${r.id})" class="absolute top-4 right-4 text-xs text-rose-500 hover:text-rose-600"><i class="fas fa-trash"></i></button>` : ''}
+                    ${window.isAdmin ? `<button onclick="deleteReview(${r.id})" class="absolute top-4 right-4 text-xs text-rose-500 hover:text-rose-600"><i class="fas fa-trash"></i></button>` : ''}
                 </div>
             `).join('');
         }
 
         function renderGallery() {
             const grid = document.getElementById('gallery-grid');
-            grid.innerHTML = appData.gallery.map((imgUrl, index) => `
+            grid.innerHTML = window.appData.gallery.map((imgUrl, index) => `
                 <div class="relative group rounded-2xl overflow-hidden aspect-square border border-slate-200 dark:border-slate-800 shadow-sm">
                     <img src="${imgUrl}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
-                    ${isAdmin ? `
+                    ${window.isAdmin ? `
                         <button onclick="deleteGalleryImage(${index})" class="absolute top-2 right-2 bg-rose-500/80 hover:bg-rose-600 text-white p-1.5 rounded-full text-xs shadow-md transition-colors">
                             <i class="fas fa-trash"></i>
                         </button>
@@ -877,31 +865,28 @@
         }
 
         function renderContact() {
-            document.getElementById('contact-phone').innerText = appData.contact.phone;
-            document.getElementById('contact-email').innerText = appData.contact.email;
-            document.getElementById('contact-address').innerText = appData.contact.address;
+            document.getElementById('contact-phone').innerText = window.appData.contact.phone;
+            document.getElementById('contact-email').innerText = window.appData.contact.email;
+            document.getElementById('contact-address').innerText = window.appData.contact.address;
         }
 
-        // Action Handlers
-        function saveSocial() {
+        window.saveSocial = function() {
             const name = document.getElementById('social-name').value;
             const url = document.getElementById('social-url').value;
             const icon = document.getElementById('social-icon').value || 'fas fa-link';
             if (name && url) {
-                appData.socials.push({ id: Date.now(), name, url, icon });
-                saveData();
+                window.appData.socials.push({ id: Date.now(), name, url, icon });
+                window.saveDataToFirebase();
                 closeModal('modal-social');
-                showToast("Social link added!");
             }
         }
 
-        function deleteSocial(id) {
-            appData.socials = appData.socials.filter(s => s.id !== id);
-            saveData();
-            showToast("Social link deleted");
+        window.deleteSocial = function(id) {
+            window.appData.socials = window.appData.socials.filter(s => s.id !== id);
+            window.saveDataToFirebase();
         }
 
-        function saveProject() {
+        window.saveProject = function() {
             const title = document.getElementById('proj-title').value;
             const desc = document.getElementById('proj-desc').value;
             const link = document.getElementById('proj-link').value || '#';
@@ -911,89 +896,80 @@
             if (fileInput.files && fileInput.files[0]) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    appData.projects.push({ id: Date.now(), title, desc, link, img: e.target.result });
-                    saveData();
+                    window.appData.projects.push({ id: Date.now(), title, desc, link, img: e.target.result });
+                    window.saveDataToFirebase();
                     closeModal('modal-project');
-                    showToast("Project added!");
                 };
                 reader.readAsDataURL(fileInput.files[0]);
             } else {
                 if (title && desc) {
-                    appData.projects.push({ id: Date.now(), title, desc, link, img });
-                    saveData();
+                    window.appData.projects.push({ id: Date.now(), title, desc, link, img });
+                    window.saveDataToFirebase();
                     closeModal('modal-project');
-                    showToast("Project added!");
                 }
             }
         }
 
-        function deleteProject(id) {
-            appData.projects = appData.projects.filter(p => p.id !== id);
-            saveData();
-            showToast("Project deleted");
+        window.deleteProject = function(id) {
+            window.appData.projects = window.appData.projects.filter(p => p.id !== id);
+            window.saveDataToFirebase();
         }
 
-        function saveReview() {
+        window.saveReview = function() {
             const name = document.getElementById('rev-name').value;
             const role = document.getElementById('rev-role').value;
             const text = document.getElementById('rev-text').value;
             if (name && text) {
-                if (!appData.reviews) appData.reviews = [];
-                appData.reviews.push({ id: Date.now(), name, role, text });
-                saveData();
+                if (!window.appData.reviews) window.appData.reviews = [];
+                window.appData.reviews.push({ id: Date.now(), name, role, text });
+                window.saveDataToFirebase();
                 closeModal('modal-review');
-                showToast("Recommendation added!");
             }
         }
 
-        function deleteReview(id) {
-            appData.reviews = appData.reviews.filter(r => r.id !== id);
-            saveData();
-            showToast("Review deleted");
+        window.deleteReview = function(id) {
+            window.appData.reviews = window.appData.reviews.filter(r => r.id !== id);
+            window.saveDataToFirebase();
         }
 
-        function saveGalleryImage() {
+        window.saveGalleryImage = function() {
             const url = document.getElementById('gal-url').value;
             const fileInput = document.getElementById('gal-file');
 
             if (fileInput.files && fileInput.files[0]) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    appData.gallery.push(e.target.result);
-                    saveData();
+                    window.appData.gallery.push(e.target.result);
+                    window.saveDataToFirebase();
                     closeModal('modal-gallery');
-                    showToast("Gallery image uploaded!");
                 };
                 reader.readAsDataURL(fileInput.files[0]);
             } else if (url) {
-                appData.gallery.push(url);
-                saveData();
+                window.appData.gallery.push(url);
+                window.saveDataToFirebase();
                 closeModal('modal-gallery');
-                showToast("Gallery image uploaded!");
             }
         }
 
-        function deleteGalleryImage(index) {
-            appData.gallery.splice(index, 1);
-            saveData();
-            showToast("Photo removed");
+        window.deleteGalleryImage = function(index) {
+            window.appData.gallery.splice(index, 1);
+            window.saveDataToFirebase();
         }
 
-        // Helpers
-        function toggleTheme() { document.documentElement.classList.toggle('dark'); }
-        function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
-        function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+        window.toggleTheme = function() { document.documentElement.classList.toggle('dark'); }
+        window.openModal = function(id) { document.getElementById(id).classList.remove('hidden'); }
+        window.closeModal = function(id) { document.getElementById(id).classList.add('hidden'); }
 
-        function showToast(message) {
+        window.showToast = function(message) {
             const toast = document.getElementById('toast');
             document.getElementById('toast-msg').innerText = message;
             toast.classList.remove('translate-y-20', 'opacity-0');
             setTimeout(() => { toast.classList.add('translate-y-20', 'opacity-0'); }, 3000);
         }
 
-        function handleContactSubmit(e) {
+        window.handleContactSubmit = function(e) {
             e.preventDefault();
-            showToast(currentLang === 'bn' ? "আপনার বার্তা পাঠানো হয়েছে!" : "Your message has been sent!");
+            window.showToast(window.currentLang === 'bn' ? "আপনার বার্তা পাঠানো হয়েছে!" : "Your message has been sent!");
             e.target.reset();
         }
     </script>
